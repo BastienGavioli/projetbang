@@ -290,10 +290,40 @@ public class Game {
     }
 
     /**
+    * Indique si tout les hors la lois sont eliminés
+     * True if all the outlaws are dead
+    * */
+
+    public boolean outlawAreAllDead(){
+        for(Player outlaw : outlawPlayers){
+            if(!outlaw.isDead()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
      * Teste si la partie est terminée et met à jour les attributs {@code finished} et {@code winners}.
      */
     private void updateGameFinished() {
-        throw new RuntimeException("Méthode non implémentée !");
+
+        if(sheriffPlayer.isDead()){
+            finished=true;
+            if(!renegadePlayer.isDead() && players.size()==1)
+                winners.add(renegadePlayer);
+            else
+                winners.addAll(outlawPlayers);
+        }
+        else if(renegadePlayer.isDead() && outlawAreAllDead()){
+            finished = true;
+            winners.add(sheriffPlayer);
+            winners.addAll(deputyPlayers);
+        }
+        else{
+            finished=false;
+        }
     }
 
     /**

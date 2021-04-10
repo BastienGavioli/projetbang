@@ -49,4 +49,15 @@ class GameTest {
         assertEquals(2, minimalGame.getPlayerDistance(p4, p2));
     }
 
+    @Test
+    void testAllOutlawsAreDead(){
+        assertFalse(minimalGame.outlawAreAllDead());
+        p1.decrementHealth(4, p1);
+        p2.decrementHealth(4, p1);
+        p3.decrementHealth(4, p1);
+        p4.decrementHealth(4, p1);
+
+        assertTrue(minimalGame.outlawAreAllDead());
+    }
+
 }
