@@ -169,7 +169,23 @@ public class Game {
      * @return entier représentant la distance qui sépare les deux joueurs
      */
     public int getPlayerDistance(Player player1, Player player2) {
-        throw new RuntimeException("Méthode non implémentée !");
+        //Je pars du principe que la liste players est rangé dans l'ordre des joueurs et que le premier et le dernier sont cote à cote
+
+        int index1 = players.indexOf(player1), index2 = players.indexOf(player2), coef=1;
+        //coef sert à eviter les valeurs negatives
+
+
+        if(index1<index2) {
+            coef = -1;
+        }
+
+        if(index1-index2*coef>players.size()/2){
+            return 4-(index1-index2)*coef;
+        }
+        else{
+            return index1-index2*coef;
+        }
+
     }
 
     /**
