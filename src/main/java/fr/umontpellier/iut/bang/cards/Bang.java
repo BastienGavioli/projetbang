@@ -10,15 +10,18 @@ public class Bang extends OrangeCard {
     }
 
 
-    public void effectBang(){
+    public void effectBang(Player shooter){
         System.out.println("Un bang vient d'être joués");
+        shooter.setBangPlayed(true);
+
     }
 
 
     @Override
     public boolean canPlayFromHand(Player player) {
-        return player.getWeapon().getName().equals("Volcanic")
-                || player.isBangPlayed();
+        return (player.getWeapon()!=null &&
+                player.getWeapon().getName().equals("Volcanic"))
+                || !player.isBangPlayed();
     }
 
 
