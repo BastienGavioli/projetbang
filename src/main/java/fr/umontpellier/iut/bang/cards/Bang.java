@@ -11,9 +11,15 @@ public class Bang extends OrangeCard {
 
 
     public void effectBang(Player shooter){
-        System.out.println("Un bang vient d'être joués");
-        shooter.setBangPlayed(true);
+        System.out.println("A player activate a bang effect");
+    }
 
+
+    @Override
+    public void playedBy(Player player) {
+        effectBang(player);
+        player.setBangPlayed(true);
+        player.discard(this);
     }
 
 
