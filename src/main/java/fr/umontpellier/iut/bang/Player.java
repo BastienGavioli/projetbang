@@ -200,7 +200,7 @@ public class Player {
      * @return distance à laquelle le joueur courant voit le joueur passé en paramètre
      */
     public int distanceTo(Player player) {
-        throw new RuntimeException("Méthode non implémentée !");
+        return game.getPlayerDistance(this, player);
     }
 
     /**
