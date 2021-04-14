@@ -41,6 +41,12 @@ public class Player {
      */
     private WeaponCard weapon;
 
+    /**
+     * true si le joueur a deja joue un bang
+     */
+    private boolean bangPlayed;
+
+
     public Player(String name, BangCharacter bangCharacter, Role role) {
         this.name = name;
         this.role = role;
@@ -48,6 +54,7 @@ public class Player {
         healthPoints = getHealthPointsMax();
         inPlay = new ArrayList<>();
         hand = new ArrayList<>();
+        bangPlayed = false;
     }
 
     public String getName() {
@@ -80,6 +87,14 @@ public class Player {
 
     public WeaponCard getWeapon() {
         return weapon;
+    }
+
+    public void setBangPlayed(boolean bangPlayed) {
+        this.bangPlayed = bangPlayed;
+    }
+
+    public boolean isBangPlayed() {
+        return bangPlayed;
     }
 
     /**
