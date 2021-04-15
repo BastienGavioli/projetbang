@@ -12,6 +12,9 @@ public class Bang extends OrangeCard {
 
     public void effectBang(Player shooter){
         System.out.println("A player activate a bang effect");
+        Player defender = shooter.choosePlayer("Sur qui voulez vous tirer ?", shooter.getOtherPlayers(), false);
+        defender.chooseCard("Jouez un raté ou cliquez sur pass", defender.getHand(), true, true);
+
     }
 
 
