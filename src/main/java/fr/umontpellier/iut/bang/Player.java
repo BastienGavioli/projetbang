@@ -123,7 +123,20 @@ public class Player {
      * immédiatement après le joueur courant)
      */
     public List<Player> getOtherPlayers() {
-        throw new RuntimeException("Méthode non implémentée !");
+        ArrayList<Player> playerList = new ArrayList<>();
+        Player currentPlayer = game.getCurrentPlayer();
+        int currentPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer()) + 1;
+        if(currentPlayerIndex == game.getPlayers().size()){
+            currentPlayerIndex = 0;
+        }
+        while(playerList.size() != game.getPlayers().size()){
+            playerList.add(game.getPlayers().get(currentPlayerIndex));
+            currentPlayerIndex ++;
+            if(currentPlayerIndex == game.getPlayers().size()){
+                currentPlayerIndex = 0;
+            }
+        }
+        return playerList;
     }
 
     /**
@@ -132,7 +145,13 @@ public class Player {
      * à {@code range}.
      */
     public List<Player> getPlayersInRange(int range) {
-        throw new RuntimeException("Méthode non implémentée !");
+        List<Player> playersInRange = new ArrayList<>();
+        for(int i = 0; i < game.getPlayers().size(); i++){
+            if((!this.equals(game.getPlayers().get(i))) && (!(game.getPlayerDistance(this,game.getPlayers().get(i)) < range))){
+                playersInRange.add(game.getPlayers().get(i));
+            }
+        }
+        return playersInRange;
     }
 
     /**
@@ -552,5 +571,27 @@ public class Player {
                 discardFromHand(card);
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (!name.equals(player.name)) return false;
+        if (role != player.role) return false;
+        if (!bangCharacter.equals(player.bangCharacter)) return false;
+        return game.equals(player.game);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + role.hashCode();
+        result = 31 * result + bangCharacter.hashCode();
+        result = 31 * result + game.hashCode();
+        return result;
     }
 }

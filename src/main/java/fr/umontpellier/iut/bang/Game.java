@@ -475,4 +475,8 @@ public class Game {
             return discardPile.peek();
         return null;
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }
