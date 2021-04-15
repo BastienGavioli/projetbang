@@ -8,35 +8,50 @@ import java.util.List;
 
 public class Bang extends OrangeCard {
 
+    /**
+     * true quand un effet bang est en cour de jeu. Sert à autoriser les ratés, les planqes et les pouvoirs
+     */
+    private static boolean bangEffetActive;
+
     public Bang(int value, CardSuit suit) {
         super("Bang!", value, suit);
+        bangEffetActive = false;
     }
 
+    public static boolean isBangEffetActive() {
+        return bangEffetActive;
+    }
 
-    public void bangEffect(Player defender){
+    public void bangEffect(Player target){
+        bangEffetActive = true;
         System.out.println("A player activate a bang effect");
         List<String> missEffect = new ArrayList<>();
-        missEffect.add("miss");
-        defender.choose("Jouez un raté ou cliquez sur pass", missEffect, true, true);
+        missEffect.add("Missed");
+        target.choose("Jouez un raté ou cliquez sur pass", missEffect, true, true);
+        bangEffetActive = false;
+    }
 
+    //Méthode non implémenté
+    private boolean savedByABarrel(Player target){
+        return false;
     }
 
 
     @Override
     public void playedBy(Player player) {
         //On sait qu'il y a au moins 1 joueur à porté
-        Player defender;
+        Player target;
         //Selection automatique de la cible si elle est unique
         if(player.getPlayersInRange(player.getWeaponRange()).size()==1){
-            defender = player.getPlayersInRange(player.getWeaponRange()).get(0);
+            target = player.getPlayersInRange(player.getWeaponRange()).get(0);
         }
         //Choix de la cible et verification de la porté
         else{
-            defender = player.choosePlayer("Sur qui voulez vous tirer ?",
+            target = player.choosePlayer("Sur qui voulez vous tirer ?",
                     player.getPlayersInRange(player.getWeaponRange()), false);
         }
 
-        bangEffect(defender);
+        bangEffect(target);
         player.setBangPlayed(true);
         player.discard(this);
 
