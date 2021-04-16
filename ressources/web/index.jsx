@@ -1,7 +1,6 @@
 // ouverture de la socket pour communiquer avec le serveur
 let socket = new WebSocket("ws://localhost:3232");
 
-
 function shortname(s) {
     return s.replace(/[^\w]/g, '').toLowerCase();
 }
@@ -21,18 +20,22 @@ class Main extends React.Component {
             let data = JSON.parse(event.data);
             console.log(data);
             this.setState(data);
-        }
+        };
     }
 
     render() {
         if (this.state === null) {
-            return <div>Not connected to an active game.</div>;
+            return React.createElement(
+                'div',
+                null,
+                'Not connected to an active game.'
+            );
         }
 
         // process players data
         for (let data of this.state.game.players) {
-            data.turn_player = this.state.game.turn_player === data.name;   // identify turn player
-            data.active_player = this.state.active_player === data.name;    // identify active player
+            data.turn_player = this.state.game.turn_player === data.name; // identify turn player
+            data.active_player = this.state.active_player === data.name; // identify active player
             if ('weapon' in data) {
                 data.in_play.unshift(data.weapon);
             }
@@ -46,77 +49,89 @@ class Main extends React.Component {
         }
 
         let buttons = [];
-        for (const [i, button] of this.state.buttons.entries()) {
-            buttons.push(<PlayerButton label={button} value={i + 1}/>);
+        for (const button of this.state.buttons) {
+            buttons.push(React.createElement(PlayerButton, { label: button, value: button }));
         }
 
-        return (
-            <div id="main" className={classes.join(" ")}>
-                <PlayersArea players={this.state.game.players}/>
-                <div id="instruction"><span id="instruction_text">{this.state.instruction}</span>
-                    {buttons}
-                    {this.state.can_pass && <PlayerButton label="Pass" value=""/>}
-                </div>
-                <div id="piles">
-                    <DrawPile size={this.state.game.draw_pile}/>
-                    <div id="discard_pile">
-                        <CardsList cards={this.state.game.discard_pile} keepOrder={true}/>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
-
-
-class PlayersArea extends React.Component {
-    render() {
-        const players = this.props['players'].map(d => <PlayerInfo data={d}/>);
-        console.log(players.length);
-        if (players.length > 3) {
-            return (
-                <div className="players_area">
-                    <div className="row">
-                        {players.slice(0, ~~(players.length / 2))}
-                    </div>
-                    <div className="row">
-                        {players.slice(~~(players.length / 2)).reverse()}
-                    </div>
-                </div>
+        return React.createElement(
+            'div',
+            { id: 'main', className: classes.join(" ") },
+            React.createElement(PlayersArea, { players: this.state.game.players }),
+            React.createElement(
+                'div',
+                { id: 'instruction' },
+                React.createElement(
+                    'span',
+                    { id: 'instruction_text' },
+                    this.state.instruction
+                ),
+                buttons,
+                this.state.can_pass && React.createElement(PlayerButton, { label: 'Pass', value: '' })
+            ),
+            React.createElement(
+                'div',
+                { id: 'piles' },
+                React.createElement(DrawPile, { size: this.state.game.draw_pile }),
+                React.createElement(
+                    'div',
+                    { id: 'discard_pile' },
+                    React.createElement(CardsList, { cards: this.state.game.discard_pile.reverse(), keepOrder: true })
+                )
             )
-        } else {
-            return (
-                <div className="players_area">
-                    <div className="row">
-                        {players}
-                    </div>
-                </div>
-            )
-        }
-    }
-}
-
-
-class HPBullets
-    extends React
-        .Component {
-    render() {
-        let bullets = [];
-        for (let i = 0; i < this.props.hp; i++) {
-            bullets.push(<div className="hp_bullet" style={{backgroundImage: `url(images/bullet.png)`}}/>);
-        }
-        for (let i = this.props.hp; i < this.props.hp_max; i++) {
-            bullets.push(<div className="hp_bullet" style={{backgroundImage: `url(images/bullet_grey.png)`}}/>);
-        }
-
-        return (
-            <div className="hp">
-                {bullets}
-            </div>
         );
     }
 }
 
+class PlayersArea extends React.Component {
+    render() {
+        const players = this.props['players'].map(d => React.createElement(PlayerInfo, { data: d }));
+        console.log(players.length);
+        if (players.length > 3) {
+            return React.createElement(
+                'div',
+                { className: 'players_area' },
+                React.createElement(
+                    'div',
+                    { className: 'row' },
+                    players.slice(0, ~~(players.length / 2))
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'row' },
+                    players.slice(~~(players.length / 2)).reverse()
+                )
+            );
+        } else {
+            return React.createElement(
+                'div',
+                { className: 'players_area' },
+                React.createElement(
+                    'div',
+                    { className: 'row' },
+                    players
+                )
+            );
+        }
+    }
+}
+
+class HPBullets extends React.Component {
+    render() {
+        let bullets = [];
+        for (let i = 0; i < this.props.hp; i++) {
+            bullets.push(React.createElement('div', { className: 'hp_bullet', style: { backgroundImage: `url(images/bullet.png)` } }));
+        }
+        for (let i = this.props.hp; i < this.props.hp_max; i++) {
+            bullets.push(React.createElement('div', { className: 'hp_bullet', style: { backgroundImage: `url(images/bullet_grey.png)` } }));
+        }
+
+        return React.createElement(
+            'div',
+            { className: 'hp' },
+            bullets
+        );
+    }
+}
 
 class PlayerButton extends React.Component {
     render() {
@@ -126,35 +141,40 @@ class PlayerButton extends React.Component {
             event.preventDefault();
         };
 
-        return (
-            <span
-                className={className}
-                onClick={onClick}
-            >
-                {this.props.label}
-            </span>
+        return React.createElement(
+            'span',
+            {
+                className: className,
+                onClick: onClick
+            },
+            this.props.label
         );
     }
 }
-
 
 class Card extends React.Component {
     render() {
         const [name, poker] = this.props.data;
         const filename = shortname(name) + '_' + poker;
 
-        return (
-            <div
-                className={['card'].concat(this.props.classes).join(' ')}
-                style={{
+        return React.createElement(
+            'div',
+            {
+                className: ['card'].concat(this.props.classes).join(' '),
+                style: {
                     backgroundImage: `url(images/cards/${filename}.png)`,
-                    zIndex: `${this.props.zindex}`,
-                }}
-                onClick={() => {
+                    zIndex: `${this.props.zindex}`
+                },
+                onClick: () => {
                     socket.send(name);
-                }}
-                ref="bg"
-            ><span className='name' ref="name">{name}</span></div>
+                },
+                ref: 'bg'
+            },
+            React.createElement(
+                'span',
+                { className: 'name', ref: 'name' },
+                name
+            )
         );
     }
 
@@ -167,16 +187,21 @@ class Card extends React.Component {
     }
 }
 
-
 class CharacterCard extends React.Component {
     render() {
-        return <div
-            className="card character"
-            style={{backgroundImage: `url(images/characters/${shortname(this.props.name)}.png)`}}
-            ref="bg"
-        >
-            <span ref="name" className='name'>{this.props.name}</span>
-        </div>
+        return React.createElement(
+            'div',
+            {
+                className: 'card character',
+                style: { backgroundImage: `url(images/characters/${shortname(this.props.name)}.png)` },
+                ref: 'bg'
+            },
+            React.createElement(
+                'span',
+                { ref: 'name', className: 'name' },
+                this.props.name
+            )
+        );
     }
 
     componentDidMount() {
@@ -187,7 +212,6 @@ class CharacterCard extends React.Component {
         }
     }
 }
-
 
 class PlayerInfo extends React.Component {
     render() {
@@ -199,47 +223,60 @@ class PlayerInfo extends React.Component {
             classes.push('turn_player');
         }
 
-        return (
-            <div className={classes.join(' ')}>
-                <div className="player_name">{this.props.data['name']}</div>
-                <div className="row">
-                    <div
-                        className="character_info"
-                        onClick={() => {
+        return React.createElement(
+            'div',
+            { className: classes.join(' ') },
+            React.createElement(
+                'div',
+                { className: 'player_name' },
+                this.props.data['name']
+            ),
+            React.createElement(
+                'div',
+                { className: 'row' },
+                React.createElement(
+                    'div',
+                    {
+                        className: 'character_info',
+                        onClick: () => {
                             socket.send(this.props.data['name']);
-                        }}
-                    >
-                        <div
-                            className="card role"
-                            style={{backgroundImage: `url(images/roles/${this.props.data['role']}.png)`}}
-                        />
-                        <CharacterCard name={this.props.data['character']}/>
-                        <HPBullets hp={this.props.data['hp']} hp_max={this.props.data['hp_max']}/>
-                    </div>
-                    <div className="in_play">
-                        <CardsList cards={this.props.data['in_play']}/>
-                    </div>
-                </div>
-                <div className="hand">
-                    <CardsList cards={this.props.data['hand']}/>
-                </div>
-            </div>
+                        }
+                    },
+                    React.createElement('div', {
+                        className: 'card role',
+                        style: { backgroundImage: `url(images/roles/${this.props.data['role']}.png)` }
+                    }),
+                    React.createElement(CharacterCard, { name: this.props.data['character'] }),
+                    React.createElement(HPBullets, { hp: this.props.data['hp'], hp_max: this.props.data['hp_max'] })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'in_play' },
+                    React.createElement(CardsList, { cards: this.props.data['in_play'] })
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'hand' },
+                React.createElement(CardsList, { cards: this.props.data['hand'] })
+            )
         );
     }
 }
-
 
 class CardsList extends React.Component {
     render() {
         // if list is empty return an empty "phantom" card to keep space
         if (this.props.cards.length === 0) {
-            return [
-                <div className="card phantom" key="phantom">
-                    <div className="wrapper">
-                        <div className="background"/>
-                    </div>
-                </div>
-            ];
+            return [React.createElement(
+                'div',
+                { className: 'card phantom', key: 'phantom' },
+                React.createElement(
+                    'div',
+                    { className: 'wrapper' },
+                    React.createElement('div', { className: 'background' })
+                )
+            )];
         }
 
         let cards = [];
@@ -252,33 +289,38 @@ class CardsList extends React.Component {
             if (i + 1 < this.props.cards.length && data[0] === this.props.cards[i + 1][0]) {
                 classes.push('duplicate');
             }
-            cards.push(<Card data={data} classes={classes} zindex={i + 1} index={i}/>)
+            cards.push(React.createElement(Card, { data: data, classes: classes, zindex: i + 1, index: i }));
         }
-        return (cards);
+        return cards;
     }
 }
 
 class DrawPile extends React.Component {
     render() {
         if (this.props.size === 0) {
-            return [
-                <div className="card phantom" key="phantom">
-                    <div className="wrapper">
-                        <div className="background"/>
-                    </div>
-                </div>
-            ];
+            return [React.createElement(
+                'div',
+                { className: 'card phantom', key: 'phantom' },
+                React.createElement(
+                    'div',
+                    { className: 'wrapper' },
+                    React.createElement('div', { className: 'background' })
+                )
+            )];
         }
 
         let cards = [];
         for (let i = 0; i < this.props.size; i++) {
-            cards.push(<div className="card" style={{backgroundImage: "url(images/cards/back.png)"}}/>);
+            cards.push(React.createElement('div', { className: 'card', style: { backgroundImage: "url(images/cards/back.png)" } }));
         }
-        return (<div id="draw_pile">{cards}</div>);
+        return React.createElement(
+            'div',
+            { id: 'draw_pile' },
+            cards
+        );
     }
 }
 
-ReactDOM.render(
-    <Main/>,
-    document.getElementById('root')
-);
+ReactDOM.render(React.createElement(Main, null), document.getElementById('root'));
+
+//# sourceMappingURL=index.js.map
