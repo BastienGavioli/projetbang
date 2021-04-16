@@ -57,7 +57,6 @@ public class Bang extends OrangeCard {
 
     }
 
-/* //A réactiver quand la méthode getWeapon sera implémenté
     @Override
     public boolean canPlayFromHand(Player player) {
         return ((player.getWeapon()!=null &&
@@ -65,6 +64,6 @@ public class Bang extends OrangeCard {
                 || !player.isBangPlayed())
                 && player.getPlayersInRange(player.getWeaponRange()).size()>0;
     }
-*/
+
 
 }
