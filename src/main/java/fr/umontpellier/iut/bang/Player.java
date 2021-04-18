@@ -1,9 +1,6 @@
 package fr.umontpellier.iut.bang;
 
-import fr.umontpellier.iut.bang.cards.BlueCard;
-import fr.umontpellier.iut.bang.cards.Card;
-import fr.umontpellier.iut.bang.cards.Mustang;
-import fr.umontpellier.iut.bang.cards.WeaponCard;
+import fr.umontpellier.iut.bang.cards.*;
 import fr.umontpellier.iut.bang.characters.BangCharacter;
 
 import java.util.*;
@@ -48,6 +45,7 @@ public class Player {
     private boolean bangPlayed;
 
     //true si le joueur a une carte Mustang en jeu
+    //On peut le simplifier en verifiant si le joueur a une carte mustang exposé devant lui (voir hasBarrel)
     private boolean hasMustang;
 
 
@@ -60,6 +58,14 @@ public class Player {
         hand = new ArrayList<>();
         bangPlayed = false;
         hasMustang = false;
+    }
+
+    public boolean hasBarel(){
+        for(Card c : inPlay){
+            if(c.getName().equals("Barrel"))
+                return true;
+        }
+        return false;
     }
 
     public String getName() {
@@ -246,7 +252,7 @@ public class Player {
      * @param card carte à défausser
      */
     public void discard(Card card) {
-        if(card.getName() == "Mustang"){
+        if(card.getName().equals("Mustang")){
             setHasMustang(false);
         } //modifie par Mathis
         game.addToDiscard(card);

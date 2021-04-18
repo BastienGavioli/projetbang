@@ -23,29 +23,29 @@ public class Bang extends OrangeCard {
     }
 
     public void bangEffect(Player target, Player attacker){
-        bangEffetActive = true;
-        System.out.println("A player activate a bang effect");
 
-        List<Card> missCards = target.getHand();
-        missCards.removeIf(c -> !c.getName().equals("Missed!"));
+        bangEffetActive = true; //Permet de jouer des ratés
 
+        //Si le joueur a une planque, elle s'active
+        if(!target.hasBarel() || (target.hasBarel() && !Barrel.savePlayer(target.getGame()))) {
+            boolean b = Barrel.savePlayer(target.getGame());
+            //On enlève toutes les cartes qui ne sont pas des ratés de la main
+            List<Card> missCards = target.getHand();
+            missCards.removeIf(c -> !c.getName().equals("Missed!"));
 
-        Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
-                missCards, false, true);
-        if(missed==null){
-            target.decrementHealth(1, attacker);
-        }
-        else{
-            target.playFromHand(missed);
+            //Le joueur choisi si il veut jouer un ratés
+            Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
+                    missCards, false, true);
+            if (missed == null) {
+                target.decrementHealth(1, attacker);
+            } else {
+                target.playFromHand(missed);
+            }
         }
         bangEffetActive = false;
     }
 
 
-    //Méthode non implémenté
-    private boolean savedByABarrel(Player target){
-        return false;
-    }
 
 
     @Override
