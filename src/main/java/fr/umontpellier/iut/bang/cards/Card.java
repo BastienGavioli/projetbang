@@ -82,4 +82,5 @@ public abstract class Card {
     public String toJSON() {
         return String.format("[\"%s\", \"%s%s\"]", name, getValueString(), suit.toJSON());
     }
+
 }

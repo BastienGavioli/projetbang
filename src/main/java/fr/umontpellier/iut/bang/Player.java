@@ -2,6 +2,7 @@ package fr.umontpellier.iut.bang;
 
 import fr.umontpellier.iut.bang.cards.BlueCard;
 import fr.umontpellier.iut.bang.cards.Card;
+import fr.umontpellier.iut.bang.cards.Mustang;
 import fr.umontpellier.iut.bang.cards.WeaponCard;
 import fr.umontpellier.iut.bang.characters.BangCharacter;
 
@@ -46,6 +47,9 @@ public class Player {
      */
     private boolean bangPlayed;
 
+    //true si le joueur a une carte Mustang en jeu
+    private boolean hasMustang;
+
 
     public Player(String name, BangCharacter bangCharacter, Role role) {
         this.name = name;
@@ -55,6 +59,7 @@ public class Player {
         inPlay = new ArrayList<>();
         hand = new ArrayList<>();
         bangPlayed = false;
+        hasMustang = false;
     }
 
     public String getName() {
@@ -147,7 +152,11 @@ public class Player {
     public List<Player> getPlayersInRange(int range) {
         List<Player> playersInRange = new ArrayList<>();
         for(int i = 0; i < game.getPlayers().size(); i++){
-            if((!this.equals(game.getPlayers().get(i))) && (!(game.getPlayerDistance(this,game.getPlayers().get(i)) < range))){
+            int mustang = 0; //sert si le joueur dont on veut voir la distance a un Mustang en jeu
+            if(game.getPlayers().get(i).hasMustang){
+                mustang = 1;
+            }
+            if((!this.equals(game.getPlayers().get(i))) && (!(game.getPlayerDistance(this,game.getPlayers().get(i)) < range - mustang))){
                 playersInRange.add(game.getPlayers().get(i));
             }
         }
@@ -237,6 +246,9 @@ public class Player {
      * @param card carte à défausser
      */
     public void discard(Card card) {
+        if(card.getName() == "Mustang"){
+            setHasMustang(false);
+        } //modifie par Mathis
         game.addToDiscard(card);
     }
 
@@ -571,6 +583,12 @@ public class Player {
                 discardFromHand(card);
             }
         }
+    }
+
+
+
+    public void setHasMustang(boolean hasMustang) {
+        this.hasMustang = hasMustang;
     }
 
     @Override
