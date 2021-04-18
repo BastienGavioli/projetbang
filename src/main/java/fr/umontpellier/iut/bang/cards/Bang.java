@@ -22,14 +22,25 @@ public class Bang extends OrangeCard {
         return bangEffetActive;
     }
 
-    public void bangEffect(Player target){
+    public void bangEffect(Player target, Player attacker){
         bangEffetActive = true;
         System.out.println("A player activate a bang effect");
-        List<String> missEffect = new ArrayList<>();
-        missEffect.add("Missed");
-        target.choose("Jouez un raté ou cliquez sur pass", missEffect, true, true);
+
+        List<Card> missCards = target.getHand();
+        missCards.removeIf(c -> !c.getName().equals("Missed!"));
+
+
+        Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
+                missCards, false, true);
+        if(missed==null){
+            target.decrementHealth(1, attacker);
+        }
+        else{
+            target.playFromHand(missed);
+        }
         bangEffetActive = false;
     }
+
 
     //Méthode non implémenté
     private boolean savedByABarrel(Player target){
@@ -51,7 +62,7 @@ public class Bang extends OrangeCard {
                     player.getPlayersInRange(player.getWeaponRange()), false);
         }
 
-        bangEffect(target);
+        bangEffect(target, player);
         player.setBangPlayed(true);
         player.discard(this);
 
