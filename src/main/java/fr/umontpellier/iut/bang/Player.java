@@ -186,7 +186,7 @@ public class Player {
      * @param weapon nouvelle arme à équiper
      */
     public void setWeapon(WeaponCard weapon) {
-        throw new RuntimeException("Méthode non implémentée !");
+        this.weapon = weapon;
     }
 
     /**
@@ -311,7 +311,7 @@ public class Player {
      * @return true si la carte a bien été retirée, false sinon (la carte n'était pas dans la main du joueur)
      */
     public boolean removeFromHand(Card card) {
-        throw new RuntimeException("Méthode non implémentée !");
+        return hand.remove(card);
     }
 
     /**
@@ -578,7 +578,12 @@ public class Player {
      * @param card carte à retirer de la liste
      */
     public void removeFromInPlay(BlueCard card) {
-        throw new RuntimeException("Méthode non implémentée !");
+        inPlay.remove(card);
+    }
+
+    public void discardFromInPlay(BlueCard c) {
+        removeFromInPlay(c);
+        game.addToDiscard(c);
     }
 
     /**
@@ -598,6 +603,7 @@ public class Player {
             Card pioche = this.randomDraw();
             if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
                 this.decrementHealth(3, null);
+                discardFromInPlay(getCardInPlay("Dynamite"));
             }
             else{
                 this.getOtherPlayers();
@@ -608,8 +614,9 @@ public class Player {
         //ne peut pas etre utiliser contre le sherif
         if(this.getCardInPlay("Jail") != null){
             Card pioche = this.randomDraw();
+            discardFromInPlay(getCardInPlay("Jail"));
             if(!pioche.getSuit().toJSON().equals("H")){
-                removeFromInPlay(getCardInPlay("Jail"));
+                return;
             }
         }
 
