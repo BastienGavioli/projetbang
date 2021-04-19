@@ -10,9 +10,11 @@ public class Beer extends OrangeCard {
 
     public void heal(Player player) {
         player.incrementHealth(1);
-        player.discardFromHand(this);
+        //player.discardFromHand(this);
     }
 
-
-
+    @Override
+    public void playedBy(Player player) {
+        this.heal(player);
+    }
 }
