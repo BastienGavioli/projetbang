@@ -22,7 +22,7 @@ public class Bang extends OrangeCard {
         return bangEffetActive;
     }
 
-    public void bangEffect(Player target, Player attacker){
+    public static void bangEffect(Player target, Player attacker){
 
         bangEffetActive = true; //Permet de jouer des ratés
 
