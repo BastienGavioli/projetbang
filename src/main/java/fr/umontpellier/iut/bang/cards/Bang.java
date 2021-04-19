@@ -30,7 +30,7 @@ public class Bang extends OrangeCard {
         if(!target.hasBarel() || (target.hasBarel() && !Barrel.savePlayer(target.getGame()))) {
             boolean b = Barrel.savePlayer(target.getGame());
             //On enlève toutes les cartes qui ne sont pas des ratés de la main
-            List<Card> missCards = target.getHand();
+            List<Card> missCards = new ArrayList<>(target.getHand());
             missCards.removeIf(c -> !c.getName().equals("Missed!"));
 
             //Le joueur choisi si il veut jouer un ratés
