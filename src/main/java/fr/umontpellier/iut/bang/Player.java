@@ -226,7 +226,22 @@ public class Player {
      *                 responsable (p.ex. Dynamite)
      */
     public void decrementHealth(int n, Player attacker) {
-        throw new RuntimeException("Méthode non implémentée !");
+        healthPoints-=n;
+        if (isDead() && hasBeer()) {
+            incrementHealth(1);
+            discard(getCardInPlay("Beer"));
+        }
+        else if(isDead()){
+            game = null;
+        }
+    }
+
+    public boolean hasBeer(){
+        for(Card c : inPlay){
+            if(c.getName().equals("Beer"))
+                return true;
+        }
+        return false;
     }
 
     /**

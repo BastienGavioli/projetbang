@@ -9,7 +9,7 @@ import java.util.List;
 public class Bang extends OrangeCard {
 
     /**
-     * true quand un effet bang est en cour de jeu. Sert à autoriser les ratés, les planqes et les pouvoirs
+     * true quand un effet bang est en cour de jeu. Sert à autoriser les ratés, les planques et les pouvoirs
      */
     private static boolean bangEffetActive;
 
