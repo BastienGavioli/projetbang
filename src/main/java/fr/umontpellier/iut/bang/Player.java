@@ -229,10 +229,21 @@ public class Player {
         healthPoints-=n;
         if (isDead() && hasBeer()) {
             incrementHealth(1);
-            discard(getCardInPlay("Beer"));
+            discardFromHand(getCardInPlay("Beer"));
         }
         else if(isDead()){
             game = null;
+            if(this.getRole()==Role.OUTLAW)
+                for(int i = 0; i<3;i++)
+                    attacker.drawToHand();
+                //Si joueur tué est un hors la loi : le tueur pioche 3 cartes
+            if(this.getRole()==Role.DEPUTY)
+                if(attacker.getRole()==Role.SHERIFF){
+                    attacker.hand.removeAll(attacker.getHand());
+                    attacker.inPlay.removeAll(attacker.getInPlay());
+                    attacker.discard(attacker.weapon);
+                }
+            //Si joueur tué est un adjoint : si le tueur est le shérif : le shérif perd toutes ses cartes de la main et devant lui
         }
     }
 
