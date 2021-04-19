@@ -599,25 +599,18 @@ public class Player {
         // phase 0: setup et résolution des effets préliminaires (dynamite, prison, etc...)
         // dynamite : tire une carte qui sera ensuite defausser si entre 2 et 9 de pique la dynamite explose
         //et fait 3 degats sinon passe au joueur a sa gauche
-        if(this.getCardInPlay("Dynamite") != null){
-            Card pioche = this.randomDraw();
-            if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
-                this.decrementHealth(3, null);
-                discardFromInPlay(getCardInPlay("Dynamite"));
-            }
-            else{
-                this.getOtherPlayers();
-            }
+        BlueCard dynamite = this.getCardInPlay("Dynamite");
+        BlueCard jail = this.getCardInPlay("Jail");
+        if(dynamite != null){
+            dynamite.playedBy(this);
+
         }
 
         //tire une carte si coeur la carte est defaussee il joue normalement, sinon le joueur la defausse et passe son tour
         //ne peut pas etre utiliser contre le sherif
-        if(this.getCardInPlay("Jail") != null){
-            Card pioche = this.randomDraw();
-            discardFromInPlay(getCardInPlay("Jail"));
-            if(!pioche.getSuit().toJSON().equals("H")){
-                return;
-            }
+        if(jail != null){
+            jail.playedBy(this);
+            return;
         }
 
         // phase 1: piocher des cartes
