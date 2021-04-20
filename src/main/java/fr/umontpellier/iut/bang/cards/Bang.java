@@ -73,6 +73,7 @@ public class Bang extends OrangeCard {
         return ((player.getWeapon()!=null &&
                 player.getWeapon().getName().equals("Volcanic"))
                 || !player.isBangPlayed())
+                && player.getPlayersInRange(player.getWeaponRange()).size()>0
                 && player.getPlayersInRange(player.getWeaponRange()).size()>0;
     }
 

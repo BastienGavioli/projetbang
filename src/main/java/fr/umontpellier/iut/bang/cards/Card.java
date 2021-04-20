@@ -83,4 +83,11 @@ public abstract class Card {
         return String.format("[\"%s\", \"%s%s\"]", name, getValueString(), suit.toJSON());
     }
 
+    /**
+     * @return la couleur de la carte, bleu, orange ou weapon
+     */
+    public String getCardColor(){
+        return "";
+    }
+
 }

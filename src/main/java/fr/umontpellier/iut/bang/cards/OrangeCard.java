@@ -16,4 +16,9 @@ public abstract class OrangeCard extends Card {
     public void playedBy(Player player) {
         player.discard(this);
     }
+
+    @Override
+    public String getCardColor() {
+        return "Orange";
+    }
 }

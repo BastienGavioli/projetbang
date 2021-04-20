@@ -17,4 +17,8 @@ public abstract class WeaponCard extends BlueCard {
         player.setWeapon(this);
     }
 
+    @Override
+    public String getCardColor() {
+        return "Weapon";
+    }
 }

@@ -17,4 +17,9 @@ public abstract class BlueCard extends Card {
     public void playedBy(Player player) {
         player.addToInPlay(this);
     }
+
+    @Override
+    public String getCardColor() {
+        return "Blue";
+    }
 }
