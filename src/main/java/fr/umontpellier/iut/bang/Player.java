@@ -119,6 +119,19 @@ public class Player {
     }
 
     /**
+     * Retourne la portée des joueurs pour les effets ne prennant pas en compte l'arme, modifié par le viseur
+     */
+    public int getBaseRange(){
+        int porte = 1;
+        for(BlueCard c : inPlay){
+            //Je ne simplifie pas car un personnage va modifier cette valeur, on pourra le verifier pareil
+            if(c.getName().equals("Scope"))
+                porte++;
+        }
+        return porte;
+    }
+
+    /**
      * @return le nombre maximum de points de vie que le joueur peut avoir. Dépend des points de vie de son personnage
      * et de son rôle (le Shériff a un point de vie max de plus que les autres)
      */
