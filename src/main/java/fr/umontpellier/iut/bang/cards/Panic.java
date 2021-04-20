@@ -26,30 +26,60 @@ public class Panic extends OrangeCard {
         }
 
         //Choix de la carte
-        ArrayList<Card> cartesTarget = new ArrayList<>(target.getHand());
-        cartesTarget.addAll(target.getInPlay());
-        cartesTarget.add(target.getWeapon());
-        Card choisie = player.chooseCard("Choisissez une carte de " + target.getName(), cartesTarget,
-                false, false);
+        //Choix main ou exposé
+        ArrayList<String> possibilites = new ArrayList<>();
+        if(target.getHand().size()>0)
+            possibilites.add("Hand");
+
+        //Choix des cartes devant le joueur
+        ArrayList<Card> cartesTarget = new ArrayList<>(target.getInPlay());
+        if(target.getWeapon()!=null)
+            cartesTarget.add(target.getWeapon());
+
+        for(Card c : cartesTarget)
+            possibilites.add(c.getName());
+
+        String choix = player.choose("Voulez vous prendre dans la main de "+target.getName()+" ou devant lui",
+                new ArrayList<>(possibilites), true, false);
+
+        Card choisie=null;
+        if(choix.equals("Hand"))
+            choisie=target.removeRandomCardFromHand();
+        else{
+            if(target.getWeapon().getName().equals(choix))
+                choisie=target.getWeapon();
+            else
+                for(Card c : target.getInPlay())
+                   if(c.getName().equals(choix))
+                        choisie=c;
+        }
+
 
 
         //La donner au player et la supprime du target
-        player.addToHand(choisie);
         //Si la carte est bleu on la joue
-        if(choisie.getCardColor().equals("Blue")){
-            choisie.playedBy(player);
-            target.removeFromInPlay((BlueCard) choisie);
-        }
-        else if(choisie.getCardColor().equals("Weapon")){
-            choisie.playedBy(player);
-            target.setWeapon(null);
+
+        if(target.getHand().contains(choisie)) {
+            target.removeFromHand(choisie);
+
+            if(choisie.getCardColor().equals("Blue"))
+                player.addToInPlay((BlueCard) choisie);
+            else
+                player.addToHand(choisie);
+
         }
         else{
-            target.removeFromHand(choisie);
+            if (choisie.getCardColor().equals("Blue")) {
+                choisie.playedBy(player);
+                target.removeFromInPlay((BlueCard) choisie);
+            } else {
+                player.addToHand(choisie);
+                target.setWeapon(null);
+            }
         }
 
+        target.removeFromHand(choisie);
 
-        //Supprimer la carte de la cible
 
     }
 }
