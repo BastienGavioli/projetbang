@@ -172,15 +172,27 @@ public class Player {
      */
     public List<Player> getPlayersInRange(int range) {
         List<Player> playersInRange = new ArrayList<>();
+
+        /*
         for(int i = 0; i < game.getPlayers().size(); i++){
             int mustang = 0; //sert si le joueur dont on veut voir la distance a un Mustang en jeu
             if(game.getPlayers().get(i).hasMustang){
                 mustang = 1;
             }
-            if((!this.equals(game.getPlayers().get(i))) && (!(game.getPlayerDistance(this,game.getPlayers().get(i)) < range - mustang))){
+            if((!this.equals(game.getPlayers().get(i))) && (!(this.distanceTo(game.getPlayers().get(i)) < range - mustang))){
                 playersInRange.add(game.getPlayers().get(i));
             }
+        }*/
+        for(Player p : getOtherPlayers()){
+            int modificateur = 0;
+            if(p.hasMustang){
+                modificateur ++;
+            }
+            if(this.distanceTo(p)<=range-modificateur){
+                playersInRange.add(p);
+            }
         }
+
         return playersInRange;
     }
 
