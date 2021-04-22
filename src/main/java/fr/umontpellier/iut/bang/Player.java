@@ -147,7 +147,8 @@ public class Player {
      * immédiatement après le joueur courant)
      */
     public List<Player> getOtherPlayers() {
-        ArrayList<Player> playerList = new ArrayList<>();
+        ArrayList<Player> playerList = new ArrayList<>(game.getPlayers());
+        /*
         Player currentPlayer = game.getCurrentPlayer();
         int currentPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer()) + 1;
         if(currentPlayerIndex == game.getPlayers().size()){
@@ -159,7 +160,7 @@ public class Player {
             if(currentPlayerIndex == game.getPlayers().size()){
                 currentPlayerIndex = 0;
             }
-        }
+        }*/
         playerList.remove(this);
         return playerList;
     }
