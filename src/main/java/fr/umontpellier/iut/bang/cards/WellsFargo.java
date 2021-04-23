@@ -11,5 +11,6 @@ public class WellsFargo extends OrangeCard {
         player.drawToHand();
         player.drawToHand();
         player.drawToHand();
+        player.discard(this);
     }
 }
