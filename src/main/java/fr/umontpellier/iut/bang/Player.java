@@ -271,7 +271,7 @@ public class Player {
                     attacker.discard(attacker.weapon);
                 }
             //Si joueur tué est un adjoint : si le tueur est le shérif : le shérif perd toutes ses cartes de la main et devant lui
-                else{
+
                 for(BlueCard c : inPlay){
                     this.discardFromInPlay(c);
                 }
@@ -279,7 +279,7 @@ public class Player {
                     this.discardFromHand(c);
                 }
                     //dans les autres cas, les cartes sont retirées et mise dans la défausse
-            }
+
             }
     }
 
