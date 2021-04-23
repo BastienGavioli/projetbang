@@ -672,6 +672,8 @@ public class Player {
                 discardFromHand(card);
             }
         }
+        //On remet la possibilité de jouer des bang pour les duels et le tour d'apret
+        bangPlayed = false;
     }
 
 
