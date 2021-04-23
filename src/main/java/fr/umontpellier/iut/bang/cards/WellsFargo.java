@@ -7,6 +7,7 @@ public class WellsFargo extends OrangeCard {
         super("Wells Fargo", value, suit);
     }
 
+    @Override
     public void playedBy(Player player){
         player.drawToHand();
         player.drawToHand();

@@ -264,14 +264,23 @@ public class Player {
                 for(int i = 0; i<3;i++)
                     attacker.drawToHand();
                 //Si joueur tué est un hors la loi : le tueur pioche 3 cartes
-            if(this.getRole()==Role.DEPUTY)
+            else if(this.getRole()==Role.DEPUTY)
                 if(attacker.getRole()==Role.SHERIFF){
                     attacker.hand.removeAll(attacker.getHand());
                     attacker.inPlay.removeAll(attacker.getInPlay());
                     attacker.discard(attacker.weapon);
                 }
             //Si joueur tué est un adjoint : si le tueur est le shérif : le shérif perd toutes ses cartes de la main et devant lui
-        }
+                else{
+                for(BlueCard c : inPlay){
+                    this.discardFromInPlay(c);
+                }
+                for(Card c : hand){
+                    this.discardFromHand(c);
+                }
+                    //dans les autres cas, les cartes sont retirées et mise dans la défausse
+            }
+            }
     }
 
     public boolean hasBeer(){
@@ -607,6 +616,7 @@ public class Player {
         inPlay.remove(card);
     }
 
+    //defausse une carte de la liste des cartes que le joueur a devant lui
     public void discardFromInPlay(BlueCard c) {
         removeFromInPlay(c);
         game.addToDiscard(c);
