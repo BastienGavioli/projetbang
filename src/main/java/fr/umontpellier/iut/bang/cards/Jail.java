@@ -11,9 +11,9 @@ public class Jail extends BlueCard {
     public void playedBy(Player player) {
         player.addToInPlay(this);
         Card pioche = player.randomDraw();
-        player.discardFromInPlay(player.getCardInPlay("Jail"));
         if(pioche.getSuit().toJSON().equals("H")){
            player.playTurn();
+           player.discardFromInPlay(this);
         }
     }
 }
