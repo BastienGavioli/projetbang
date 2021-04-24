@@ -29,7 +29,7 @@ public class Panic extends OrangeCard {
         //Choix main ou exposé
         ArrayList<String> possibilites = new ArrayList<>();
         if(target.getHand().size()>0)
-            possibilites.add("Hand");
+            possibilites.add(target.getName());
 
         //Choix des cartes devant le joueur
         ArrayList<Card> cartesTarget = new ArrayList<>(target.getInPlay());
@@ -39,11 +39,12 @@ public class Panic extends OrangeCard {
         for(Card c : cartesTarget)
             possibilites.add(c.getName());
 
-        String choix = player.choose("Voulez vous prendre dans la main de "+target.getName()+" ou devant lui",
+        String choix = player.choose("Voulez vous prendre dans la main de "+target.getName()+
+                        " (donnez alors son nom) ou devant lui (CLiquez sur la carte) ?",
                 new ArrayList<>(possibilites), true, false);
 
         Card choisie=null;
-        if(choix.equals("Hand"))
+        if(choix.equals(target.getName()))
             choisie=target.removeRandomCardFromHand();
         else{
             if(target.getWeapon().getName().equals(choix))
