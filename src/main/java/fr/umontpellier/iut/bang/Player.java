@@ -637,9 +637,9 @@ public class Player {
         //et fait 3 degats sinon passe au joueur a sa gauche
         BlueCard dynamite = this.getCardInPlay("Dynamite");
         BlueCard jail = this.getCardInPlay("Jail");
-        if(dynamite != null){
+        while (dynamite != null){
             dynamite.playedBy(this);
-
+            dynamite = this.getCardInPlay("Dynamite");
         }
 
         //tire une carte si coeur la carte est defaussee il joue normalement, sinon le joueur la defausse et passe son tour
