@@ -80,8 +80,7 @@ public class Panic extends OrangeCard {
             }
         }
 
-        target.removeFromHand(choisie);
-
+        player.getGame().addToDiscard(this);
 
     }
 }
