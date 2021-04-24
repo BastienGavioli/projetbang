@@ -22,6 +22,11 @@ public class Dynamite extends BlueCard {
         }
     }
 
+    @Override
+    public boolean canPlayFromHand(Player player) {
+        return true;
+    }
+
     public void tryToExplodeOn(Player player){
         Card pioche = player.randomDraw();
         if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
