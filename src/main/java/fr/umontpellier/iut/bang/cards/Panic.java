@@ -47,7 +47,7 @@ public class Panic extends OrangeCard {
         if(choix.equals(target.getName()))
             choisie=target.removeRandomCardFromHand();
         else{
-            if(target.getWeapon().getName().equals(choix))
+            if(target.getWeapon()!=null && target.getWeapon().getName().equals(choix))
                 choisie=target.getWeapon();
             else
                 for(Card c : target.getInPlay())
