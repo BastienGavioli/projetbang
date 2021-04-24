@@ -46,7 +46,7 @@ public class Player {
     private boolean bangPlayed;
 
     //true si le joueur a une carte Mustang en jeu
-    //On peut le simplifier en verifiant si le joueur a une carte mustang exposé devant lui (voir hasBarrel)
+    //On peut le simplifier en vérifiant si le joueur a une carte Mustang exposée devant lui (voir hasBarrel)
     private boolean hasMustang;
 
 
@@ -61,7 +61,7 @@ public class Player {
         hasMustang = false;
     }
 
-    public boolean hasBarel(){
+    public boolean hasBarrel(){
         for(Card c : inPlay){
             if(c.getName().equals("Barrel"))
                 return true;

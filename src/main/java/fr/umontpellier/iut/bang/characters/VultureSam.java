@@ -5,5 +5,4 @@ public class VultureSam extends BangCharacter {
     public VultureSam() {
         super("Vulture Sam", 4);
     }
-
 }
