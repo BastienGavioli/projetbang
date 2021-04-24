@@ -20,7 +20,7 @@ public class Panic extends OrangeCard {
         }
         //Choix de la cible et verification de la porté
         else{
-            target = player.choosePlayer("A qui voulez vous prendre une carte ? " +
+            target = player.choosePlayer("A qui voulez-vous prendre une carte ? " +
                             "(portée non modifié par les armes)",
                     player.getPlayersInRange(player.getBaseRange()), false);
         }

@@ -9,7 +9,7 @@ import java.util.List;
 public class Bang extends OrangeCard {
 
     /**
-     * true quand un effet bang est en cour de jeu. Sert à autoriser les ratés, les planques et les pouvoirs
+     * true quand un effet bang est en cours de jeu. Sert à autoriser les ratés, les planques et les pouvoirs
      */
     private static boolean bangEffetActive;
 
@@ -33,7 +33,7 @@ public class Bang extends OrangeCard {
             List<Card> missCards = new ArrayList<>(target.getHand());
             missCards.removeIf(c -> !c.getName().equals("Missed!"));
 
-            //Le joueur choisi si il veut jouer un ratés
+            //Le joueur choisi s'il veut jouer un Missed!
             Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
                     missCards, false, true);
             if (missed == null) {
@@ -50,15 +50,15 @@ public class Bang extends OrangeCard {
 
     @Override
     public void playedBy(Player player) {
-        //On sait qu'il y a au moins 1 joueur à porté
+        //On sait qu'il y a au moins 1 joueur à portée
         Player target;
-        //Selection automatique de la cible si elle est unique
+        //Sélection automatique de la cible si elle est unique
         if(player.getPlayersInRange(player.getWeaponRange()).size()==1){
             target = player.getPlayersInRange(player.getWeaponRange()).get(0);
         }
-        //Choix de la cible et verification de la porté
+        //Choix de la cible et vérification de la portée
         else{
-            target = player.choosePlayer("Sur qui voulez vous tirer ?",
+            target = player.choosePlayer("Sur qui voulez-vous tirer ?",
                     player.getPlayersInRange(player.getWeaponRange()), false);
         }
 
@@ -72,8 +72,7 @@ public class Bang extends OrangeCard {
     public boolean canPlayFromHand(Player player) {
         return ((player.getWeapon()!=null &&
                 player.getWeapon().getName().equals("Volcanic"))
-                || !player.isBangPlayed())
-                && player.getPlayersInRange(player.getWeaponRange()).size()>0
+                ||!player.isBangPlayed() || player.getBangCharacter().getName().equals("WillyTheKid"))
                 && player.getPlayersInRange(player.getWeaponRange()).size()>0;
     }
 

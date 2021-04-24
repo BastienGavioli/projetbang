@@ -18,6 +18,7 @@ public class Player {
      * Rôle dans la partie (Shériff, adjoint, hors-la-loi ou renégat)
      */
     private Role role;
+
     /**
      * Personnage
      */
@@ -66,6 +67,10 @@ public class Player {
                 return true;
         }
         return false;
+    }
+
+    public BangCharacter getBangCharacter() {
+        return bangCharacter;
     }
 
     public String getName() {
@@ -187,6 +192,9 @@ public class Player {
             int modificateur = 0;
             if(p.hasMustang){
                 modificateur ++;
+            }
+            if(p.getBangCharacter().getName().equals("Paul Regret")) {
+                modificateur++;
             }
             if(this.distanceTo(p)<=range-modificateur){
                 playersInRange.add(p);
