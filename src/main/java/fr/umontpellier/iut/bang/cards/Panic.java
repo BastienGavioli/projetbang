@@ -60,11 +60,12 @@ public class Panic extends OrangeCard {
         //La donner au player et la supprime du target
         //Si la carte est bleu on la joue
 
-        if(target.getHand().contains(choisie)) {
+        if(choisie!=null && target.getHand().contains(choisie)) {
             target.removeFromHand(choisie);
 
             if(choisie.getCardColor().equals("Blue"))
-                player.addToInPlay((BlueCard) choisie);
+                choisie.playedBy(player);
+                //player.addToInPlay((BlueCard) choisie);
             else
                 player.addToHand(choisie);
 
