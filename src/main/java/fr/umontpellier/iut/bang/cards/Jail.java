@@ -22,10 +22,10 @@ public class Jail extends BlueCard {
                     targets.add(p);
                 }
             }
-            //Choisir une cible parmi les joueurs non sheriff
-            target = player.choosePlayer("Qui voulez vous mettre en prison ? ",
+            //Choisir une cible parmi les joueurs non-shériff
+            target = player.choosePlayer("Qui voulez-vous mettre en prison ? ",
                     targets, false);
-            //ajout de la carte au joueur choisi
+            //Ajout de la carte au joueur choisi
             target.addToInPlay(this);
             active = true;
         }

@@ -20,7 +20,7 @@ public class CatBalou extends OrangeCard {
             target = player.getOtherPlayers().get(0);
         }
         else{
-            target = player.choosePlayer("A qui voulez vous supprimer une carte ? " +
+            target = player.choosePlayer("À qui voulez-vous supprimer une carte ? " +
                             "(portée illimitée)",
                     player.getOtherPlayers(), false);
         }
@@ -39,8 +39,8 @@ public class CatBalou extends OrangeCard {
         for(Card c : cartesTarget)
             possibilites.add(c.getName());
 
-        String choix = player.choose("Voulez vous prendre dans la main de "+target.getName()+
-                        " (donnez alors son nom) ou devant lui (CLiquez sur la carte) ?",
+        String choix = player.choose("Voulez-vous prendre dans la main de "+target.getName()+
+                        " (donnez alors son nom) ou devant lui (Cliquez sur la carte) ?",
                 new ArrayList<>(possibilites), true, false);
 
         Card choisie=null;
