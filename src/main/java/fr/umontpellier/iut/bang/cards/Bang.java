@@ -33,7 +33,7 @@ public class Bang extends OrangeCard {
             List<Card> missCards = new ArrayList<>(target.getHand());
             missCards.removeIf(c -> !c.getName().equals("Missed!"));
 
-            //Le joueur choisi s'il veut jouer un Missed!
+            //Le joueur choisit s'il veut jouer un Missed!
             Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
                     missCards, false, true);
             if (missed == null) {
