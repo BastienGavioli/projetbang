@@ -179,11 +179,11 @@ public class Game {
             coef = -1;
         }
 
-        if(index1-index2*coef>players.size()/2){
+        if((index1-index2)*coef>players.size()/2){
             return 4-(index1-index2)*coef;
         }
         else{
-            return index1-index2*coef;
+            return (index1-index2)*coef;
         }
 
     }
