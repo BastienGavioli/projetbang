@@ -267,7 +267,7 @@ public class Player {
             discardFromHand(getCardInPlay("Beer"));
         }
         else if(isDead()){
-            game = null;
+            game.removePlayer(this);
             if(this.getRole()==Role.OUTLAW)
                 for(int i = 0; i<3;i++)
                     attacker.drawToHand();
