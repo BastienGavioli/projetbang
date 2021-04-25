@@ -180,7 +180,7 @@ public class Game {
         }
 
         if((index1-index2)*coef>players.size()/2){
-            return 4-(index1-index2)*coef;
+            return players.size()-(index1-index2)*coef;
         }
         else{
             return (index1-index2)*coef;
