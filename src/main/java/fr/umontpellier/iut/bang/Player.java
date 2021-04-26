@@ -139,6 +139,13 @@ public class Player {
     }
 
     /**
+     * Retourne la range d'un personnage avec son arme plus ses modificateurs
+     * @return
+     */
+    public int getRangeMax(){
+        return getWeaponRange()+getBaseRange()-1;
+    }
+    /**
      * @return le nombre maximum de points de vie que le joueur peut avoir. Dépend des points de vie de son personnage
      * et de son rôle (le Shériff a un point de vie max de plus que les autres)
      */

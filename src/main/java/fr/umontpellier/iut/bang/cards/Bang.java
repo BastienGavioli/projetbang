@@ -52,14 +52,15 @@ public class Bang extends OrangeCard {
     public void playedBy(Player player) {
         //On sait qu'il y a au moins 1 joueur à portée
         Player target;
+        int range = player.getRangeMax();
         //Sélection automatique de la cible si elle est unique
-        if(player.getPlayersInRange(player.getWeaponRange()).size()==1){
-            target = player.getPlayersInRange(player.getWeaponRange()).get(0);
+        if(player.getPlayersInRange(range).size()==1){
+            target = player.getPlayersInRange(range).get(0);
         }
         //Choix de la cible et vérification de la portée
         else{
             target = player.choosePlayer("Sur qui voulez-vous tirer ?",
-                    player.getPlayersInRange(player.getWeaponRange()), false);
+                    player.getPlayersInRange(range), false);
         }
 
         bangEffect(target, player);
@@ -73,7 +74,7 @@ public class Bang extends OrangeCard {
         return ((player.getWeapon()!=null &&
                 player.getWeapon().getName().equals("Volcanic"))
                 ||!player.isBangPlayed() || player.getBangCharacter().getName().equals("Willy the Kid"))
-                && player.getPlayersInRange(player.getWeaponRange()).size()>0;
+                && player.getPlayersInRange(player.getRangeMax()).size()>0;
     }
 
 
