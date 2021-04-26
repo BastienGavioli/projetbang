@@ -61,9 +61,10 @@ public class Player {
         hasMustang = false;
     }
 
-    public boolean hasBarrel(){
+
+    public boolean hasBleuCardName(String name){
         for(Card c : inPlay){
-            if(c.getName().equals("Barrel"))
+            if(c.getName().equals(name))
                 return true;
         }
         return false;
@@ -128,10 +129,11 @@ public class Player {
      */
     public int getBaseRange(){
         int porte = 1;
-        for(BlueCard c : inPlay){
-            //Je ne simplifie pas car un personnage va modifier cette valeur, on pourra le verifier pareil
-            if(c.getName().equals("Scope"))
-                porte++;
+        if(hasBleuCardName("Scope")){
+            porte++;
+        }
+        if(bangCharacter.getName().equals("Rose Doolan")){
+            porte++;
         }
         return porte;
     }
@@ -190,8 +192,11 @@ public class Player {
         }*/
         for(Player p : getOtherPlayers()){
             int modificateur = 0;
-            if(p.hasMustang){
+            if(p.hasBleuCardName("Mustang")){
                 modificateur ++;
+            }
+            if(this.hasBleuCardName("Scope")){
+                System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
             }
             if(p.getBangCharacter().getName().equals("Paul Regret")) {
                 modificateur++;
