@@ -41,7 +41,7 @@ public class Player {
     private WeaponCard weapon;
 
     /**
-     * true si le joueur a deja joue un bang
+     * true si le joueur a déjà joue un bang
      */
     private boolean bangPlayed;
 
@@ -62,7 +62,7 @@ public class Player {
     }
 
 
-    public boolean hasBleuCardName(String name){
+    public boolean hasBlueCardName(String name){
         for(Card c : inPlay){
             if(c.getName().equals(name))
                 return true;
@@ -129,7 +129,7 @@ public class Player {
      */
     public int getBaseRange(){
         int porte = 1;
-        if(hasBleuCardName("Scope")){
+        if(hasBlueCardName("Scope")){
             porte++;
         }
         if(bangCharacter.getName().equals("Rose Doolan")){
@@ -139,8 +139,7 @@ public class Player {
     }
 
     /**
-     * Retourne la range d'un personnage avec son arme plus ses modificateurs
-     * @return
+     * @return la range d'un personnage avec son arme plus ses modificateurs
      */
     public int getRangeMax(){
         return getWeaponRange()+getBaseRange()-1;
@@ -198,17 +197,17 @@ public class Player {
             }
         }*/
         for(Player p : getOtherPlayers()){
-            int modificateur = 0;
-            if(p.hasBleuCardName("Mustang")){
-                modificateur ++;
+            int modifier = 0;
+            if(p.hasBlueCardName("Mustang")){
+                modifier++;
             }
-            if(this.hasBleuCardName("Scope")){
+            if(this.hasBlueCardName("Scope")){
                 System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
             }
             if(p.getBangCharacter().getName().equals("Paul Regret")) {
-                modificateur++;
+                modifier++;
             }
-            if(this.distanceTo(p)<=range-modificateur){
+            if(this.distanceTo(p)<=range-modifier){
                 playersInRange.add(p);
             }
         }
@@ -653,8 +652,8 @@ public class Player {
      */
     public void playTurn() {
         // phase 0: setup et résolution des effets préliminaires (dynamite, prison, etc...)
-        // dynamite : tire une carte qui sera ensuite defausser si entre 2 et 9 de pique la dynamite explose
-        //et fait 3 degats sinon passe au joueur a sa gauche
+        // dynamite : tire une carte qui sera ensuite défausser si entre 2 et 9 de pique la dynamite explose
+        //et fait 3 dégâts sinon passe au joueur à sa gauche
         BlueCard dynamite = this.getCardInPlay("Dynamite");
         BlueCard jail = this.getCardInPlay("Jail");
         while (dynamite != null){
@@ -662,8 +661,8 @@ public class Player {
             dynamite = this.getCardInPlay("Dynamite");
         }
 
-        //tire une carte si coeur la carte est defaussee il joue normalement, sinon le joueur la defausse et passe son tour
-        //ne peut pas etre utiliser contre le sherif
+        //tire une carte si coeur la carte est défaussée il joue normalement, sinon le joueur la défausse et passe son tour
+        //ne peut pas être utilisé contre le shériff
         if(jail != null){
             jail.playedBy(this);
             return;
@@ -692,7 +691,7 @@ public class Player {
                 discardFromHand(card);
             }
         }
-        //On remet la possibilité de jouer des bang pour les duels et le tour d'apret
+        //On remet la possibilité de jouer des bang pour les duels et le tour d'après
         bangPlayed = false;
     }
 

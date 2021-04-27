@@ -18,41 +18,41 @@ public class Panic extends OrangeCard {
         if(player.getPlayersInRange(player.getBaseRange()).size()==1){
             target = player.getPlayersInRange(player.getBaseRange()).get(0);
         }
-        //Choix de la cible et verification de la porté
+        //Choix de la cible et vérification de la portée
         else{
-            target = player.choosePlayer("A qui voulez-vous prendre une carte ? " +
-                            "(portée non modifié par les armes)",
+            target = player.choosePlayer("À qui voulez-vous prendre une carte ? " +
+                            "(portée non modifiée par les armes)",
                     player.getPlayersInRange(player.getBaseRange()), false);
         }
 
         //Choix de la carte
         //Choix main ou exposé
-        ArrayList<String> possibilites = new ArrayList<>();
+        ArrayList<String> targetCardsInHand = new ArrayList<>();
         if(target.getHand().size()>0)
-            possibilites.add(target.getName());
+            targetCardsInHand.add(target.getName());
 
         //Choix des cartes devant le joueur
-        ArrayList<Card> cartesTarget = new ArrayList<>(target.getInPlay());
+        ArrayList<Card> targetCardsInPlay = new ArrayList<>(target.getInPlay());
         if(target.getWeapon()!=null)
-            cartesTarget.add(target.getWeapon());
+            targetCardsInPlay.add(target.getWeapon());
 
-        for(Card c : cartesTarget)
-            possibilites.add(c.getName());
+        for(Card c : targetCardsInPlay)
+            targetCardsInHand.add(c.getName());
 
-        String choix = player.choose("Voulez vous prendre dans la main de "+target.getName()+
-                        " (donnez alors son nom) ou devant lui (CLiquez sur la carte) ?",
-                new ArrayList<>(possibilites), true, false);
+        String chosenPlayer = player.choose("Voulez-vous prendre dans la main de "+target.getName()+
+                        " (donnez alors son nom) ou devant lui (Cliquez sur la carte) ?",
+                new ArrayList<>(targetCardsInHand), true, false);
 
-        Card choisie=null;
-        if(choix.equals(target.getName()))
-            choisie=target.removeRandomCardFromHand();
+        Card chosenCard=null;
+        if(chosenPlayer.equals(target.getName()))
+            chosenCard=target.removeRandomCardFromHand();
         else{
-            if(target.getWeapon()!=null && target.getWeapon().getName().equals(choix))
-                choisie=target.getWeapon();
+            if(target.getWeapon()!=null && target.getWeapon().getName().equals(chosenPlayer))
+                chosenCard=target.getWeapon();
             else
                 for(Card c : target.getInPlay())
-                   if(c.getName().equals(choix))
-                        choisie=c;
+                   if(c.getName().equals(chosenPlayer))
+                        chosenCard=c;
         }
 
 
@@ -60,17 +60,17 @@ public class Panic extends OrangeCard {
         //La donner au player et la supprime du target
         //Si la carte est bleu on la joue
 
-        if(choisie!=null && target.getHand().contains(choisie)) {
-            target.removeFromHand(choisie);
-            player.addToHand(choisie);
+        if(chosenCard!=null && target.getHand().contains(chosenCard)) {
+            target.removeFromHand(chosenCard);
+            player.addToHand(chosenCard);
 
         }
         else{
-            if (choisie.getCardColor().equals("Blue")) {
-                player.addToHand(choisie);
-                target.removeFromInPlay((BlueCard) choisie);
+            if (chosenCard.getCardColor().equals("Blue")) {
+                player.addToHand(chosenCard);
+                target.removeFromInPlay((BlueCard) chosenCard);
             } else {
-                player.addToHand(choisie);
+                player.addToHand(chosenCard);
                 target.setWeapon(null);
             }
         }

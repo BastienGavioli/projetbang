@@ -1,7 +1,6 @@
 package fr.umontpellier.iut.bang.cards;
 
 import fr.umontpellier.iut.bang.Player;
-import fr.umontpellier.iut.bang.characters.WillyTheKid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class Bang extends OrangeCard {
         bangEffetActive = true; //Permet de jouer des ratés
 
         //Si le joueur a une planque, elle s'active
-        if(!target.hasBleuCardName("Barrel") || (target.hasBleuCardName("Barrel") && !Barrel.savePlayer(target.getGame()))) {
+        if(!target.hasBlueCardName("Barrel") || (target.hasBlueCardName("Barrel") && !Barrel.savePlayer(target.getGame()))) {
             boolean b = Barrel.savePlayer(target.getGame());
             //On enlève toutes les cartes qui ne sont pas des ratés de la main
             List<Card> missCards = new ArrayList<>(target.getHand());
