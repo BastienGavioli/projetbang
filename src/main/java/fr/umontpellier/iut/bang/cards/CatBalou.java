@@ -25,23 +25,7 @@ public class CatBalou extends OrangeCard {
                     player.getOtherPlayers(), false);
         }
 
-        //Choix de la carte
-        //Choix main ou exposé
-        ArrayList<String> possibilites = new ArrayList<>();
-        if(target.getHand().size()>0)
-            possibilites.add(target.getName());
-
-        //Choix des cartes devant le joueur
-        ArrayList<Card> cartesTarget = new ArrayList<>(target.getInPlay());
-        if(target.getWeapon()!=null)
-            cartesTarget.add(target.getWeapon());
-
-        for(Card c : cartesTarget)
-            possibilites.add(c.getName());
-
-        String choix = player.choose("Voulez-vous prendre dans la main de "+target.getName()+
-                        " (donnez alors son nom) ou devant lui (Cliquez sur la carte) ?",
-                new ArrayList<>(possibilites), true, false);
+        String choix = new Panic(getValue(), getSuit()).choseDiscardCard(player, target);
 
         Card choisie=null;
         if(choix.equals(target.getName()))

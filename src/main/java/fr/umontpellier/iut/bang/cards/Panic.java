@@ -25,23 +25,7 @@ public class Panic extends OrangeCard {
                     player.getPlayersInRange(player.getBaseRange()), false);
         }
 
-        //Choix de la carte
-        //Choix main ou exposé
-        ArrayList<String> targetCardsInHand = new ArrayList<>();
-        if(target.getHand().size()>0)
-            targetCardsInHand.add(target.getName());
-
-        //Choix des cartes devant le joueur
-        ArrayList<Card> targetCardsInPlay = new ArrayList<>(target.getInPlay());
-        if(target.getWeapon()!=null)
-            targetCardsInPlay.add(target.getWeapon());
-
-        for(Card c : targetCardsInPlay)
-            targetCardsInHand.add(c.getName());
-
-        String chosenPlayer = player.choose("Voulez-vous prendre dans la main de "+target.getName()+
-                        " (donnez alors son nom) ou devant lui (Cliquez sur la carte) ?",
-                new ArrayList<>(targetCardsInHand), true, false);
+        String chosenPlayer = choseDiscardCard(player, target);
 
         Card chosenCard=null;
         if(chosenPlayer.equals(target.getName()))
@@ -76,6 +60,28 @@ public class Panic extends OrangeCard {
         }
 
         player.getGame().addToDiscard(this);
+
+    }
+
+    public String choseDiscardCard(Player player, Player target){
+
+        //Choix de la carte
+        //Choix main ou exposé
+        ArrayList<String> targetCardsInHand = new ArrayList<>();
+        if(target.getHand().size()>0)
+            targetCardsInHand.add(target.getName());
+
+        //Choix des cartes devant le joueur
+        ArrayList<Card> targetCardsInPlay = new ArrayList<>(target.getInPlay());
+        if(target.getWeapon()!=null)
+            targetCardsInPlay.add(target.getWeapon());
+
+        for(Card c : targetCardsInPlay)
+            targetCardsInHand.add(c.getName());
+
+        return player.choose("Voulez-vous prendre dans la main de "+target.getName()+
+                        " (donnez alors son nom) ou devant lui (Cliquez sur la carte) ?",
+                new ArrayList<>(targetCardsInHand), true, false);
 
     }
 }
