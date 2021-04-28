@@ -253,36 +253,40 @@ public class Player {
      */
     public void decrementHealth(int n, Player attacker) {
         healthPoints-=n;
-        if (isDead() && hasBeer()) {
+        while(isDead() && hasBeer()) {
             incrementHealth(1);
             discardFromHand(getCardInPlay("Beer"));
         }
-        else if(isDead()){
+        if(isDead()) {
             game.removePlayer(this);
-            //Si joueur tué est un Hors-La-Loi, le tueur pioche 3 cartes
-            if(this.getRole()==Role.OUTLAW)
-                for(int i = 0; i<3;i++)
-                    attacker.drawToHand();
-            else if(this.getRole()==Role.DEPUTY)
-                //Si le shériff tue un adjoint, le shérif perd toutes ses cartes de la main et devant lui
-                if(attacker.getRole()==Role.SHERIFF){
-                    attacker.hand.removeAll(attacker.getHand());
-                    attacker.inPlay.removeAll(attacker.getInPlay());
-                    attacker.discard(attacker.weapon);
-                }
-                for(BlueCard c : inPlay){
+            //Si le joueur est tué par quelqu'un
+            if (attacker != null) {
+                //Si joueur tué est un Hors-La-Loi, le tueur pioche 3 cartes
+                if (this.getRole() == Role.OUTLAW)
+                    for (int i = 0; i < 3; i++)
+                        attacker.drawToHand();
+                else if (this.getRole() == Role.DEPUTY)
+                    //Si le shériff tue un adjoint, le shériff perd toutes ses cartes de la main et devant lui
+                    if (attacker.getRole() == Role.SHERIFF) {
+                        attacker.hand.removeAll(attacker.getHand());
+                        attacker.inPlay.removeAll(attacker.getInPlay());
+                        if(attacker.getWeapon()!=null)
+                            attacker.discard(attacker.weapon);
+                    }
+                for (BlueCard c : inPlay) {
                     this.discardFromInPlay(c);
                 }
-                for(Card c : hand){
+                for (Card c : hand) {
                     this.discardFromHand(c);
                 }
                 //dans les autres cas, les cartes sont retirées et mises dans la défausse
 
             }
+        }
         //Pouvoir de Bart Cassidy
         else if(this.getBangCharacter().getName().equals("Bart Cassidy")) {
             for(int i=0; i<n; i++) {
-                this.drawCard();
+                this.drawToHand();
             }
         }
     }

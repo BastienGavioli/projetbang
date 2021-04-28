@@ -264,7 +264,6 @@ public class CharactersTest {
         assertTrue(discardPile.contains(pique));
     }
 
-    @Disabled
     @Test
     void testPaulRegret() {
         makeGameWithCharacter(new PaulRegret());
@@ -385,7 +384,7 @@ public class CharactersTest {
         assertTrue(p1.getHand().contains(scope));
     }
 
-    @Disabled
+
     @Test
     void testWillyTheKid() {
         makeGameWithCharacter(new WillyTheKid());

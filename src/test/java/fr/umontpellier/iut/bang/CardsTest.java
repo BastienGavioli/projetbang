@@ -48,7 +48,6 @@ public class CardsTest {
         p5 = simpleGame.getPlayers().get(4);
     }
 
-    @Disabled
     @Test
     void testBang() {
         simpleGame.setInput("p2");
@@ -59,7 +58,6 @@ public class CardsTest {
         assertEquals(3, p2.getHealthPoints());
     }
 
-    @Disabled
     @Test
     void testBangHorsPortee() {
         simpleGame.setInput("p3", "p2");
@@ -105,7 +103,6 @@ public class CardsTest {
         assertTrue(discardPile.contains(beer));
     }
 
-    @Disabled
     @Test
     void testBeer() {
         Card beer = new Beer(1, CardSuit.HEART);
@@ -168,7 +165,6 @@ public class CardsTest {
         assertTrue(discardPile.contains(bang3));
     }
 
-    @Disabled
     @Test
     void testDuel3BangPass() {
         simpleGame.setInput("p3", "");
@@ -184,7 +180,6 @@ public class CardsTest {
         assertFalse(discardPile.contains(bang));
     }
 
-    @Disabled
     @Test
     void testDynamiteExplose() {
         simpleGame.setInput("", "Missed!", "Missed!");
@@ -204,7 +199,6 @@ public class CardsTest {
         assertFalse(p1.getInPlay().contains(dynamite));
     }
 
-    @Disabled
     @Test
     void testDynamiteNExplosePas() {
         simpleGame.setInput("");
@@ -225,7 +219,6 @@ public class CardsTest {
         assertTrue(p2.getInPlay().contains(dynamite));
     }
 
-    @Disabled
     @Test
     void testGatling() {
         simpleGame.setInput("Bang!", "Missed!", "");
@@ -297,7 +290,6 @@ public class CardsTest {
         assertEquals(5, p5.getHealthPoints());  // rmq: le Shériff a 5 PV max
     }
 
-    @Disabled
     @Test
     void testJailNeSortPas() {
         simpleGame.setInput("p3", "Saloon", "");
@@ -316,7 +308,6 @@ public class CardsTest {
         assertTrue(p3.getHand().contains(saloon));
     }
 
-    @Disabled
     @Test
     void testJailSortAvecCoeur() {
         simpleGame.setInput("p3", "Saloon", "");
@@ -335,7 +326,6 @@ public class CardsTest {
         assertFalse(p3.getHand().contains(saloon));
     }
 
-    @Disabled
     @Test
     void testMissed() {
         simpleGame.setInput("p2", "Missed!");
@@ -349,7 +339,6 @@ public class CardsTest {
         assertTrue(discardPile.contains(missed));
     }
 
-    @Disabled
     @Test
     void testMustang() {
         Card mustang = new Mustang(1, CardSuit.HEART);
@@ -389,7 +378,6 @@ public class CardsTest {
         assertTrue(p1.getHand().contains(barrel));
     }
 
-    @Disabled
     @Test
     void testRemington() {
         Card remington = new Remington(1, CardSuit.HEART);
@@ -399,7 +387,6 @@ public class CardsTest {
         assertEquals(3, p1.getWeaponRange());
     }
 
-    @Disabled
     @Test
     void testRevCarabine() {
         Card revCarabine = new RevCarabine(1, CardSuit.HEART);
@@ -409,7 +396,6 @@ public class CardsTest {
         assertEquals(4, p1.getWeaponRange());
     }
 
-    @Disabled
     @Test
     void testSchofield() {
         Card schofield = new Schofield(1, CardSuit.HEART);
@@ -448,7 +434,6 @@ public class CardsTest {
         assertTrue(p1.getHand().contains(mustang));
     }
 
-    @Disabled
     @Test
     void testVolcanic() {
         simpleGame.setInput("Bang!", "p2", "Bang!", "p2", "Bang!", "p2", "");
@@ -470,7 +455,6 @@ public class CardsTest {
         assertTrue(discardPile.contains(bang3));
     }
 
-    @Disabled
     @Test
     void testWellsFargo() {
         Card wellsFargo = new WellsFargo(1, CardSuit.HEART);
@@ -489,7 +473,6 @@ public class CardsTest {
         assertTrue(p1.getHand().contains(bang));
     }
 
-    @Disabled
     @Test
     void testWinchester() {
         Card winchester = new Winchester(1, CardSuit.HEART);
