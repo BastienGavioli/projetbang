@@ -16,7 +16,6 @@ public class Indians extends OrangeCard {
         super.playedBy(player);
         //fait un effet bang sur les autres joueurs
         for(Player p : player.getOtherPlayers()){
-            Bang.bangEffect(p, player);
             //On enlève toutes les cartes qui ne sont pas des bang de la main
             List<Card> bangCards = new ArrayList<>(p.getHand());
             bangCards.removeIf(c -> !c.getName().equals("Bang!"));
