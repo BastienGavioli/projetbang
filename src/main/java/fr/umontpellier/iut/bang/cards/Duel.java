@@ -32,19 +32,28 @@ public class Duel extends OrangeCard {
         if (bang == null) { //si elle choisit de ne pas lancer le duel elle perd un pts de vie
             target.decrementHealth(1, player);
         }else { //sinon le duel est lance
+            player.discardFromHand(bang);
             //Le joueur choisit s'il veut jouer un 1er Bang! ou non
             Card bangP = player.chooseCard("Jouez une carte Bang! ou passez",
                     bangCardsP, false, true);
+            if(bangP == null)
+                player.decrementHealth(1, target);
+            else {
+                player.discardFromHand(bangP);
 
             //tant que les 2 peuvent/veulent jouer des bang
             while (bang != null && bangP != null) {
                 //La cible choisit si elle veut jouer un Bang! ou non
                 bang = target.chooseCard("Jouez une carte Bang! ou passez",
                         bangCards, false, true);
+                if(bang != null)
+                    player.discardFromHand(bang);
 
                 //Le joueur choisit s'il veut jouer un Bang! ou non
                 bangP = player.chooseCard("Jouez une carte Bang! ou passez",
                         bangCardsP, false, true);
+                if(bangP != null)
+                    player.discardFromHand(bangP);
             }
 
             //a la sortie de la boucle on verifie qui n'a plus de bang / qui a refuser de jouer un bang
@@ -53,6 +62,7 @@ public class Duel extends OrangeCard {
             } else {
                 player.decrementHealth(1, target);
             }
+        }
         }
     }
 }

@@ -26,7 +26,7 @@ public class Indians extends OrangeCard {
             if (bang == null) {
                 p.decrementHealth(1, player);
             } else {
-                player.discard(bang);
+                player.discardFromHand(bang);
             }
         }
     }
