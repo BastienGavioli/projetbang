@@ -186,28 +186,8 @@ public class Player {
     public List<Player> getPlayersInRange(int range) {
         List<Player> playersInRange = new ArrayList<>();
 
-        /*
-        for(int i = 0; i < game.getPlayers().size(); i++){
-            int mustang = 0; //sert si le joueur dont on veut voir la distance a un Mustang en jeu
-            if(game.getPlayers().get(i).hasMustang){
-                mustang = 1;
-            }
-            if((!this.equals(game.getPlayers().get(i))) && (!(this.distanceTo(game.getPlayers().get(i)) < range - mustang))){
-                playersInRange.add(game.getPlayers().get(i));
-            }
-        }*/
         for(Player p : getOtherPlayers()){
-            int modifier = 0;
-            if(p.hasBlueCardName("Mustang")){
-                modifier++;
-            }
-            if(this.hasBlueCardName("Scope")){
-                System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-            }
-            if(p.getBangCharacter().getName().equals("Paul Regret")) {
-                modifier++;
-            }
-            if(this.distanceTo(p)<=range-modifier){
+            if(this.distanceTo(p)<=range){
                 playersInRange.add(p);
             }
         }
@@ -315,7 +295,19 @@ public class Player {
      * @return distance à laquelle le joueur courant voit le joueur passé en paramètre
      */
     public int distanceTo(Player player) {
-        return game.getPlayerDistance(this, player);
+        int distance = game.getPlayerDistance(this, player);
+
+        if(player.hasBlueCardName("Mustang"))
+            distance++;
+        if(hasBlueCardName("Scope"))
+            distance--;
+        if(player.getBangCharacter().getName().equals("Paul Regret"))
+            distance++;
+        if(getBangCharacter().getName().equals("Rose Doolan"))
+            distance--;
+        if(distance<1)
+            distance=1;
+        return distance;
     }
 
     /**
