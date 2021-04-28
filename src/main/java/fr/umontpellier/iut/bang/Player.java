@@ -280,7 +280,7 @@ public class Player {
 
             }
         //Pouvoir de Bart Cassidy
-        else if(this.getBangCharacter().equals("Bart Cassidy")) {
+        else if(this.getBangCharacter().getName().equals("Bart Cassidy")) {
             for(int i=0; i<n; i++) {
                 this.drawCard();
             }
