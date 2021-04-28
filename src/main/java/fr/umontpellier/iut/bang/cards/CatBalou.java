@@ -21,7 +21,6 @@ public class CatBalou extends OrangeCard {
                 new ArrayList<>(stringAutorized), true, false);
 
         player.getGame().addToDiscard(panic.removeCardFromPlayer(player, choix));
-        player.getGame().addToDiscard(this);
     }
 
 }

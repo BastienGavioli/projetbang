@@ -21,7 +21,6 @@ public class Panic extends OrangeCard {
 
 
         player.addToHand(removeCardFromPlayer(player, choix));
-        player.getGame().addToDiscard(this);
     }
 
     public ArrayList<String> othersCardsAndPlayers(List<Player> players){

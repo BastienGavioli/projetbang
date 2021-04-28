@@ -9,9 +9,9 @@ public class WellsFargo extends OrangeCard {
 
     @Override
     public void playedBy(Player player){
+        super.playedBy(player);
         player.drawToHand();
         player.drawToHand();
         player.drawToHand();
-        player.discard(this);
     }
 }
