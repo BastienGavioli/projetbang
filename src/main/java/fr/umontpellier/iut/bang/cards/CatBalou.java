@@ -12,6 +12,7 @@ public class CatBalou extends OrangeCard {
 
     @Override
     public void playedBy(Player player) {
+        super.playedBy(player);
         Panic panic = new Panic(getValue(), getSuit());
 
         ArrayList<String> stringAutorized = panic.othersCardsAndPlayers(player.getOtherPlayers());

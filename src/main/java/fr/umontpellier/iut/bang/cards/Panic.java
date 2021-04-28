@@ -13,6 +13,7 @@ public class Panic extends OrangeCard {
 
     @Override
     public void playedBy(Player player) {
+        super.playedBy(player);
         ArrayList<String> stringAutorized = othersCardsAndPlayers(player.getPlayersInRange(player.getBaseRange()));
 
         String choix = player.choose("Que voulez vous selectioner ?",
