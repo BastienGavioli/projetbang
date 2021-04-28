@@ -3,6 +3,7 @@ package fr.umontpellier.iut.bang.cards;
 import fr.umontpellier.iut.bang.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Panic extends OrangeCard {
 
@@ -12,65 +13,20 @@ public class Panic extends OrangeCard {
 
     @Override
     public void playedBy(Player player) {
-        //Choisir une cible
-
-
-        //Je garde la variable target pour le cas d'une cible unique
-        /*
-        //Choix de la cible et vérification de la portée
-        else{
-            target = player.choosePlayer("À qui voulez-vous prendre une carte ? " +
-                            "(portée non modifiée par les armes)",
-                    player.getPlayersInRange(player.getBaseRange()), false);
-        }*/
-
-
-        //String choix = choseDiscardCard(player, target);
-        ArrayList<String> stringAutorized = othersCardsAndPlayers(player);
+        ArrayList<String> stringAutorized = othersCardsAndPlayers(player.getPlayersInRange(player.getBaseRange()));
 
         String choix = player.choose("Que voulez vous selectioner ?",
                 new ArrayList<>(stringAutorized), true, false);
 
-        Card chosenCard=null;
-        /*
-        if(choix.equals(target.getName()))
-            chosenCard=target.removeRandomCardFromHand();
-        */
-        Player target=null;
-        for(Player localtarget : player.getOtherPlayers()){
-            //Si le choix est un joueur
-            if(choix.equals(localtarget.getName())){
-                chosenCard=chosePlayerHand(choix, player).removeRandomCardFromHand();
-                localtarget.removeFromHand(chosenCard);
-                break;
-            }
 
-
-            //Si le choix est une carte exposée devant le joueur
-            else if(choseCardInPlayByName(choix, localtarget)!=null){
-                chosenCard=choseCardInPlayByName(choix, localtarget);
-                localtarget.removeFromInPlay((BlueCard) chosenCard);
-                break;
-            }
-
-            else if(localtarget.getWeapon()!=null && choix.equals(localtarget.getWeapon().getName())){
-                chosenCard=localtarget.getWeapon();
-                localtarget.setWeapon(null);
-                break;
-            }
-        }
-        player.addToHand(chosenCard);
-
-
-
-
-
+        player.addToHand(removeCardFromPlayer(player, choix));
+        player.getGame().addToDiscard(this);
     }
 
-    public ArrayList<String> othersCardsAndPlayers(Player player){
+    public ArrayList<String> othersCardsAndPlayers(List<Player> players){
         ArrayList<String> stringAutorized = new ArrayList<>();
 
-        for(Player target : player.getOtherPlayers()){
+        for(Player target : players){
             //Main du joueur
             if(target.getHand().size()>0)
                 stringAutorized.add(target.getName());
@@ -86,35 +42,34 @@ public class Panic extends OrangeCard {
         return stringAutorized;
     }
 
-    public String choseDiscardCard(Player player, Player target){
 
-        //Choix de la carte
-        //Choix main ou exposé
-        ArrayList<String> targetCardsInHand = new ArrayList<>();
-        if(target.getHand().size()>0)
-            targetCardsInHand.add(target.getName());
+    public Card removeCardFromPlayer(Player player, String choix){
+        Card chosenCard=null;
+        Player target=null;
 
-        //Choix des cartes devant le joueur
-        ArrayList<Card> targetCardsInPlay = new ArrayList<>(target.getInPlay());
-        if(target.getWeapon()!=null)
-            targetCardsInPlay.add(target.getWeapon());
+        for(Player localtarget : player.getOtherPlayers()){
+            //Si le choix est un joueur
+            if(choix.equals(localtarget.getName())){
+                chosenCard=chosePlayerHand(choix, player).removeRandomCardFromHand();
+                localtarget.removeFromHand(chosenCard);
+                break;
+            }
 
-        //choix des joueurs
-        for(Player p : player.getOtherPlayers()){
-            targetCardsInHand.add(p.getName());
+            //Si le choix est une carte exposée devant le joueur
+            else if(choseCardInPlayByName(choix, localtarget)!=null){
+                chosenCard=choseCardInPlayByName(choix, localtarget);
+                localtarget.removeFromInPlay((BlueCard) chosenCard);
+                break;
+            }
+
+            else if(localtarget.getWeapon()!=null && choix.equals(localtarget.getWeapon().getName())){
+                chosenCard=localtarget.getWeapon();
+                localtarget.setWeapon(null);
+                break;
+            }
         }
-
-        for(Card c : targetCardsInPlay)
-            targetCardsInHand.add(c.getName());
-
-
-        return player.choose("Voulez-vous prendre dans la main de "+target.getName()+
-                        " (donnez alors son nom) ou devant lui (Cliquez sur la carte) ?",
-                new ArrayList<>(targetCardsInHand), true, false);
-
+        return chosenCard;
     }
-
-
     /**
      * Retourne le joueur dont le nom correspond au choix, null si aucun n'existe
      * @param choix correspond au nom à essayer
