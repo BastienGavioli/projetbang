@@ -3,6 +3,8 @@ package fr.umontpellier.iut.bang;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 
+import fr.umontpellier.iut.bang.cards.CardSuit;
+import fr.umontpellier.iut.bang.cards.Winchester;
 import fr.umontpellier.iut.bang.characters.BangCharacter;
 import fr.umontpellier.iut.bang.characters.BartCassidy;
 import fr.umontpellier.iut.bang.characters.LuckyDuke;
@@ -89,10 +91,24 @@ public class PlayerTest {
     @Test
     void kill_a_deputy_with_attacker_is_a_sheriff_test() {
         player7.drawToHand();
-        int nb = player7.getHand().size();
+        assertFalse(player7.getHand().isEmpty());
         player5.decrementHealth(4, player7);
         assertEquals(0, player5.getHealthPoints());
-        assertEquals(0, player7.getHand().size());
-        assertNotEquals(nb, player7.getHand().size());
+        assertTrue(player7.getHand().isEmpty());
     }
+
+    @Test
+    void setWeapon_test() {
+        Winchester pioupiou = new Winchester(10, CardSuit.HEART);
+        player1.setWeapon(pioupiou);
+        assertEquals(pioupiou, player1.getWeapon());
+    }
+
+    @Test
+    void getOtherPlayers_test() {
+        List<Player> listOtherPlayers = new ArrayList<>(playerList);
+        listOtherPlayers.remove(player1);
+        assertIterableEquals(listOtherPlayers, player1.getOtherPlayers());
+    }
+
 }
