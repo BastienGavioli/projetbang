@@ -282,13 +282,38 @@ public class Player {
                         if(attacker.getWeapon()!=null)
                             attacker.discard(attacker.weapon);
                     }
-                for (BlueCard c : inPlay) {
-                    this.discardFromInPlay(c);
+                Player sam = null; //par defaut sam nexiste pas
+                for(Player b : this.getOtherPlayers()){ //on fait le tour des joueurs
+                    if(b.getBangCharacter().getName().equals("Vulture Sam")){
+                         sam = b; //si sam existe il prend la valeur du joueur
+                    }
+
+                    //si sam existe il prend les cartes
+                    if(sam != null){
+                        for (BlueCard c : inPlay) {
+                            sam.addToHand(c);
+                        }
+                        for (Card c : hand) {
+                            sam.addToHand(c);
+                        }
+                    }
+
+                    //dans les autres cas, les cartes sont retirées et mises dans la défausse
+                    for (Iterator<BlueCard> it = inPlay.iterator(); it.hasNext();) {
+                        BlueCard o = it.next();
+                        it.remove(); //Supprime o de c
+                    }
+                    for (Iterator<Card> it = hand.iterator(); it.hasNext();) {
+                        Card o = it.next();
+                        it.remove(); //Supprime o de c
+                    }
+                    /* for (BlueCard c : inPlay) {
+                        this.discardFromInPlay(c);
+                    }
+                    for (Card c : hand) {
+                        this.discardFromHand(c);
+                    }*/
                 }
-                for (Card c : hand) {
-                    this.discardFromHand(c);
-                }
-                //dans les autres cas, les cartes sont retirées et mises dans la défausse
             }
         }
     }
