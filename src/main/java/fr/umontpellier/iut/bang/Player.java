@@ -255,7 +255,7 @@ public class Player {
         healthPoints-=n;
         //Pouvoir de Bart Cassidy
         if(this.getBangCharacter().getName().equals("Bart Cassidy")) {
-            for(int i=0; i<n; i++)
+            for(int i=n; i>0; i--)
                 this.drawToHand();
         }
         while(isDead() && hasBeer()) {
@@ -286,12 +286,6 @@ public class Player {
                 }
                 //dans les autres cas, les cartes sont retirées et mises dans la défausse
 
-            }
-        }
-        //Pouvoir de Bart Cassidy
-        else if(this.getBangCharacter().getName().equals("Bart Cassidy")) {
-            for(int i=0; i<n; i++) {
-                this.drawToHand();
             }
         }
     }
