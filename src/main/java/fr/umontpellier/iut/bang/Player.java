@@ -307,12 +307,6 @@ public class Player {
                         Card o = it.next();
                         it.remove(); //Supprime o de c
                     }
-                    /* for (BlueCard c : inPlay) {
-                        this.discardFromInPlay(c);
-                    }
-                    for (Card c : hand) {
-                        this.discardFromHand(c);
-                    }*/
                 }
             }
         }
