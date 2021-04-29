@@ -258,6 +258,10 @@ public class Player {
             for(int i=n; i>0; i--)
                 this.drawToHand();
         }
+        if(attacker != null && this.getBangCharacter().getName().equals("El Gringo")){
+            this.addToHand(attacker.removeRandomCardFromHand());
+        }
+
         while(isDead() && hasBeer()) {
             incrementHealth(1);
             discardFromHand(getCardInPlay("Beer"));
@@ -285,7 +289,6 @@ public class Player {
                     this.discardFromHand(c);
                 }
                 //dans les autres cas, les cartes sont retirées et mises dans la défausse
-
             }
         }
     }
