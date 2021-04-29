@@ -45,10 +45,9 @@ public class Bang extends OrangeCard {
     }
 
 
-
-
     @Override
     public void playedBy(Player player) {
+        super.playedBy(player);
         //On sait qu'il y a au moins 1 joueur à portée
         Player target;
         int range = player.getRangeMax();
@@ -64,7 +63,6 @@ public class Bang extends OrangeCard {
 
         bangEffect(target, player);
         player.setBangPlayed(true);
-        player.discard(this);
 
     }
 
