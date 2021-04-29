@@ -160,8 +160,8 @@ public class Player {
      * immédiatement après le joueur courant)
      */
     public List<Player> getOtherPlayers() {
-        ArrayList<Player> playerList = new ArrayList<>(game.getPlayers());
-        /*
+        ArrayList<Player> playerList = new ArrayList<>();
+
         Player currentPlayer = game.getCurrentPlayer();
         int currentPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer()) + 1;
         if(currentPlayerIndex == game.getPlayers().size()){
@@ -173,7 +173,7 @@ public class Player {
             if(currentPlayerIndex == game.getPlayers().size()){
                 currentPlayerIndex = 0;
             }
-        }*/
+        }
         playerList.remove(this);
         return playerList;
     }
@@ -253,6 +253,11 @@ public class Player {
      */
     public void decrementHealth(int n, Player attacker) {
         healthPoints-=n;
+        //Pouvoir de Bart Cassidy
+        if(this.getBangCharacter().getName().equals("Bart Cassidy")) {
+            for(int i=0; i<n; i++)
+                this.drawToHand();
+        }
         while(isDead() && hasBeer()) {
             incrementHealth(1);
             discardFromHand(getCardInPlay("Beer"));

@@ -10,6 +10,7 @@ public class Barrel extends BlueCard {
 
     public static boolean savePlayer(Game game){
         Card card = game.drawCard();
+        game.addToDiscard(card);
         return card.getSuit().toJSON().equals("H");
     }
 
