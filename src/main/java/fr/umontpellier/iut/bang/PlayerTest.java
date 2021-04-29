@@ -3,11 +3,8 @@ package fr.umontpellier.iut.bang;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 
-import fr.umontpellier.iut.bang.cards.CardSuit;
-import fr.umontpellier.iut.bang.cards.Winchester;
-import fr.umontpellier.iut.bang.characters.BangCharacter;
-import fr.umontpellier.iut.bang.characters.BartCassidy;
-import fr.umontpellier.iut.bang.characters.LuckyDuke;
+import fr.umontpellier.iut.bang.cards.*;
+import fr.umontpellier.iut.bang.characters.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,10 +20,10 @@ public class PlayerTest {
     private List<Player> playerList;
     @BeforeEach
     void initialize(){
-        player1 = new Player("A", new LuckyDuke(), Role.OUTLAW);
+        player1 = new Player("A", new LuckyDuke(),Role.OUTLAW);
         player2 = new Player("B",new BartCassidy(),Role.OUTLAW);
-        player3 = new Player("C",new LuckyDuke(),Role.OUTLAW);
-        player4 = new Player("D",new LuckyDuke(),Role.OUTLAW);
+        player3 = new Player("C",new PaulRegret(),Role.OUTLAW);
+        player4 = new Player("D",new RoseDoolan(),Role.OUTLAW);
         player5 = new Player("E",new LuckyDuke(),Role.DEPUTY);
         player6 = new Player("F",new LuckyDuke(),Role.RENEGADE);
         player7 = new Player("G",new LuckyDuke(),Role.SHERIFF);
@@ -97,11 +94,50 @@ public class PlayerTest {
         assertTrue(player7.getHand().isEmpty());
     }
 
+    /**
+     * Tests unitaires de la fonction {@code Player.distanceTo}
+     */
+
     @Test
-    void setWeapon_test() {
-        Winchester pioupiou = new Winchester(10, CardSuit.HEART);
-        player1.setWeapon(pioupiou);
-        assertEquals(pioupiou, player1.getWeapon());
+    void distanceTo_test() {
+        assertEquals(1, player1.distanceTo(player2));
+        assertEquals(3, player1.distanceTo(player4));
+        assertEquals(3, player1.distanceTo(player5));
+        assertEquals(2, player1.distanceTo(player6));
+        assertEquals(1, player1.distanceTo(player7));
+    }
+
+    @Test
+    void distanceTo_with_PaulRegret_test() {
+        assertEquals(3, player1.distanceTo(player3));
+        assertEquals(2, player2.distanceTo(player3));
+        assertEquals(3, player5.distanceTo(player3));
+        assertEquals(4, player6.distanceTo(player3));
+        assertEquals(4, player7.distanceTo(player3));
+    }
+
+    @Test
+    void distanceTo_with_PaulRegret_and_Mustang_test() {
+        BlueCard mustang = new Mustang(1, CardSuit.SPADE);
+        player3.getInPlay().add(mustang);
+        assertEquals(4, player1.distanceTo(player3));
+    }
+
+    @Test
+    void distanceTo_with_RoseDoolan_test() {
+        assertEquals(2, player4.distanceTo(player1));
+        assertEquals(1, player4.distanceTo(player2));
+        assertEquals(1, player4.distanceTo(player3));
+        assertEquals(1, player4.distanceTo(player5));
+        assertEquals(1, player4.distanceTo(player6));
+        assertEquals(2, player4.distanceTo(player7));
+    }
+
+    @Test
+    void distanceTo_with_RoseDoolan_and_Mustang_test() {
+        BlueCard mustang = new Mustang(1, CardSuit.SPADE);
+        player1.getInPlay().add(mustang);
+        assertEquals(3, player4.distanceTo(player1));
     }
 
     @Test
@@ -111,4 +147,29 @@ public class PlayerTest {
         assertIterableEquals(listOtherPlayers, player1.getOtherPlayers());
     }
 
+    @Test
+    void hasBeer_test() {
+        Card beer = new Beer(1, CardSuit.SPADE);
+        player1.getHand().add(beer);
+        assertTrue(player1.hasBeer());
+        player2.getHand().removeIf(card -> card.getName().equals("Beer"));
+        assertFalse(player2.hasBeer());
+    }
+
+    @Test
+    void removeFromInPlay_test() {
+        assertEquals(0, player1.getInPlay().size());
+        BlueCard mustang = new Mustang(1, CardSuit.SPADE);
+        player1.getInPlay().add(mustang);
+        assertEquals(1, player1.getInPlay().size());
+        player1.removeFromInPlay(mustang);
+        assertEquals(0, player1.getInPlay().size());
+    }
+
+    @Test
+    void setWeapon_test() {
+        Winchester pioupiou = new Winchester(10, CardSuit.HEART);
+        player1.setWeapon(pioupiou);
+        assertEquals(pioupiou, player1.getWeapon());
+    }
 }

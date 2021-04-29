@@ -125,17 +125,17 @@ public class Player {
     }
 
     /**
-     * Retourne la portée des joueurs pour les effets ne prennant pas en compte l'arme, modifié par le viseur
+     * Retourne la portée des joueurs pour les effets ne prenant pas en compte l'arme, modifiée par le viseur
      */
     public int getBaseRange(){
-        int porte = 1;
+        int range = 1;
         if(hasBlueCardName("Scope")){
-            porte++;
+            range++;
         }
         if(bangCharacter.getName().equals("Rose Doolan")){
-            porte++;
+            range++;
         }
-        return porte;
+        return range;
     }
 
     /**
@@ -313,7 +313,7 @@ public class Player {
     }
 
     public boolean hasBeer(){
-        for(Card c : inPlay){
+        for(Card c : hand){
             if(c.getName().equals("Beer"))
                 return true;
         }
