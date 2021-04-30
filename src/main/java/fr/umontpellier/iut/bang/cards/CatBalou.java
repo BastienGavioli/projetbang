@@ -20,7 +20,18 @@ public class CatBalou extends OrangeCard {
         String choix = player.choose("Que voulez vous supprimer ?",
                 new ArrayList<>(stringAutorized), true, false);
 
-        player.getGame().addToDiscard(panic.removeCardFromPlayer(player, choix));
+        Card choisie = null;
+        for(Card c : panic.cardsOwnedByPlayers(player.getPlayersInRange(player.getBaseRange()))) {
+            if(choix.equals("" + c.getName() + c.getCardColor())){
+                choisie = c;
+                break;
+            }
+        }
+        if(choisie==null)
+            player.getGame().addToDiscard(panic.removeCardFromPlayer(player, choix));
+        else{
+            player.getGame().addToDiscard(choisie);
+        }
     }
 
 }

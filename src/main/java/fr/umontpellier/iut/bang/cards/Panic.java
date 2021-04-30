@@ -16,11 +16,27 @@ public class Panic extends OrangeCard {
         super.playedBy(player);
         ArrayList<String> stringAutorized = othersCardsAndPlayers(player.getPlayersInRange(player.getBaseRange()));
 
-        String choix = player.choose("Que voulez vous selectioner ?",
+        String choix = player.choose("Que voulez vous selectioner ? (Cliquer sur le joueur pour prendre dans la main)",
                 new ArrayList<>(stringAutorized), true, false);
 
+        Card choisie=null;
+        //Si la carte viens de la main, on connaitra son nom, sinon on connaitra son nom et sa valeur pocker
 
-        player.addToHand(removeCardFromPlayer(player, choix));
+        for(Card c : cardsOwnedByPlayers(player.getPlayersInRange(player.getBaseRange()))) {
+            if(choix.equals("" + c.getName() + c.getCardColor())){
+                choisie = c;
+                break;
+            }
+        }
+        //Si ça n'est aucune carte, c'est un joueur
+        if(choisie==null)
+            player.addToHand(removeCardFromPlayer(player, choix));
+        else{
+            player.addToHand(choisie);
+
+        }
+
+
     }
 
     public ArrayList<String> othersCardsAndPlayers(List<Player> players){
@@ -32,16 +48,33 @@ public class Panic extends OrangeCard {
                 stringAutorized.add(target.getName());
             //Arme du joueur
             if(target.getWeapon()!=null)
-                stringAutorized.add(target.getWeapon().getName());
+                stringAutorized.add(""+target.getWeapon().getName()+target.getWeapon().getPokerString());
             //Cartes bleus
             for(BlueCard bc : target.getInPlay())
-                stringAutorized.add(bc.getName());
+                stringAutorized.add(""+bc.getName()+bc.getPokerString());
 
         }
 
         return stringAutorized;
     }
 
+
+    public List<Card> cardsOwnedByPlayers(List<Player> players){
+        ArrayList<Card> cardAutorized = new ArrayList<>();
+
+        for(Player target : players){
+            //Main du joueur
+            cardAutorized.addAll(target.getHand());
+            //Arme du joueur
+            if(target.getWeapon()!=null)
+                cardAutorized.add(target.getWeapon());
+            //Cartes bleus
+            for(BlueCard bc : target.getInPlay())
+                cardAutorized.addAll(target.getInPlay());
+        }
+
+        return cardAutorized;
+    }
 
     public Card removeCardFromPlayer(Player player, String choix){
         Card chosenCard=null;
@@ -62,7 +95,8 @@ public class Panic extends OrangeCard {
                 break;
             }
 
-            else if(localtarget.getWeapon()!=null && choix.equals(localtarget.getWeapon().getName())){
+            else if(localtarget.getWeapon()!=null && choix.equals(""+localtarget.getWeapon().getName()+
+                    localtarget.getWeapon().getPokerString())){
                 chosenCard=localtarget.getWeapon();
                 localtarget.setWeapon(null);
                 break;
@@ -87,13 +121,13 @@ public class Panic extends OrangeCard {
 
     /**
      * Retourne le joueur dont le nom correspond au choix, null si aucun n'existe
-     * @param name correspond au nom à essayer
+     * @param choix correspond au nom à essayer avec son pokerString
      * @param player correspond au joueur que cherche à faire la comparaison
      * @return le player choisit, null si inexistant
      */
-    public Card choseCardInPlayByName(String name, Player player){
+    public Card choseCardInPlayByName(String choix, Player player){
         for(BlueCard bc : player.getInPlay()){
-            if(bc.getName().equals(name))
+            if(choix.equals(""+bc.getName()+bc.getPokerString()))
                 return bc;
         }
         return null;
