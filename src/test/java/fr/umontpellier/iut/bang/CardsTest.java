@@ -403,7 +403,6 @@ public class CardsTest {
         assertEquals(2, p1.getWeaponRange());
     }
 
-    @Disabled
     @Test
     void testScope() {
         Card scope = new Scope(1, CardSuit.HEART);

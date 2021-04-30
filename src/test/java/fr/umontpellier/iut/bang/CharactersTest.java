@@ -46,7 +46,6 @@ public class CharactersTest {
         }));
     }
 
-    @Disabled
     @Test
     void testBartCassidy() {
         makeGameWithCharacter(new BartCassidy());
@@ -314,7 +313,6 @@ public class CharactersTest {
         assertEquals(dynamite, discardPile.peek());
     }
 
-    @Disabled
     @Test
     void testRoseDoolan() {
         makeGameWithCharacter(new RoseDoolan());
