@@ -172,8 +172,10 @@ public class PlayerTest {
         BlueCard mustang = new Mustang(1, CardSuit.SPADE);
         player1.getInPlay().add(mustang);
         assertEquals(1, player1.getInPlay().size());
+        assertTrue(player1.getInPlay().contains(mustang));
         player1.removeFromInPlay(mustang);
         assertEquals(0, player1.getInPlay().size());
+        assertFalse(player1.getInPlay().contains(mustang));
     }
 
     @Test
