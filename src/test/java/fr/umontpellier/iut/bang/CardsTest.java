@@ -265,7 +265,7 @@ public class CardsTest {
         assertEquals("Beer", p2.getHand().get(0).getName());
     }
 
-    @Disabled
+
     @Test
     void testIndians() {
         simpleGame.setInput("Bang!", "Missed!", "", "Bang!");
