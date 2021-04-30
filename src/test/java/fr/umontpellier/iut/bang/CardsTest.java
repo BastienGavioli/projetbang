@@ -112,7 +112,7 @@ public class CardsTest {
         assertEquals(4, p1.getHealthPoints());
     }
 
-    @Disabled
+
     @Test
     void testCatBalouCarteEnJeu() {
         simpleGame.setInput("p3", "Mustang");
@@ -128,7 +128,7 @@ public class CardsTest {
         assertTrue(discardPile.contains(mustang));
     }
 
-    @Disabled
+
     @Test
     void testCatBalouCarteEnMain() {
         simpleGame.setInput("p3", "");
@@ -347,7 +347,7 @@ public class CardsTest {
         assertTrue(p2.getPlayersInRange(1).contains(p1));
     }
 
-    @Disabled
+
     @Test
     void testPanicCarteEnJeu() {
         simpleGame.setInput("p2", "Barrel");
@@ -362,7 +362,7 @@ public class CardsTest {
         assertTrue(p1.getHand().contains(barrel));
     }
 
-    @Disabled
+
     @Test
     void testPanicCarteEnMain() {
         simpleGame.setInput("p2", "");
