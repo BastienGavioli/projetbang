@@ -272,7 +272,7 @@ public class CharactersTest {
         assertTrue(p1.getPlayersInRange(1).contains(p2));
     }
 
-    @Disabled
+
     @Test
     void testPedroRamirezPiocheDansLaDefausse() {
         makeGameWithCharacter(new PedroRamirez());
@@ -292,7 +292,7 @@ public class CharactersTest {
         assertEquals(bang, drawPile.peek());
     }
 
-    @Disabled
+
     @Test
     void testPedroRamirezNePiochePasDansLaDefausse() {
         makeGameWithCharacter(new PedroRamirez());
