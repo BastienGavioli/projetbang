@@ -17,54 +17,22 @@ public class Duel extends OrangeCard {
         Player target;
         target = player.choosePlayer("Qui voulez vous défier ?", player.getOtherPlayers(), false);
 
-        //On enlève toutes les cartes qui ne sont pas des bang de la main de la cible
-        List<Card> bangCards = new ArrayList<>(target.getHand());
-        bangCards.removeIf(c -> !c.getName().equals("Bang!"));
-
-        //On fait pareil pour le joueur
-        List<Card> bangCardsP = new ArrayList<>(player.getHand());
-        bangCardsP.removeIf(c -> !c.getName().equals("Bang!"));
-
-        //La cible choisit si elle veut jouer le 1er Bang! ou non
-        Card bang;
-                bang = target.chooseCard("Jouez une carte Bang! ou passez",
-                bangCards, false, true);
-
-        if (bang == null) { //si elle choisit de ne pas lancer le duel elle perd un pts de vie
-            target.decrementHealth(1, player);
-        }else { //sinon le duel est lance
-            target.discardFromHand(bang);
-                bangCards = new ArrayList<>(target.getHand());
-                bangCards.removeIf(c -> !c.getName().equals("Bang!"));
-            //Le joueur choisit s'il veut jouer un 1er Bang! ou non
-            Card bangP;
-                    bangP = player.chooseCard("Jouez une carte Bang! ou passez",
-                    bangCardsP, false, true);
-            if(bangP == null)
-                player.decrementHealth(1, target);
-            else {
-                player.discardFromHand(bangP);
-                    bangCardsP = new ArrayList<>(player.getHand());
-                    bangCardsP.removeIf(c -> !c.getName().equals("Bang!"));
-
-            //tant que les 2 peuvent/veulent jouer des bang
-            int compteurTest = 0;
-            while (true) {
-                compteurTest++;
-                if(compteurTest==10){
-                    System.out.println(compteurTest);
-                }
-                //La cible choisit si elle veut jouer un Bang! ou non
-                if(!discardBang(target)) {
-                    target.decrementHealth(1, player);
-                    break;
-                }
-                if(!discardBang(player)) {
-                    player.decrementHealth(1, target);
-                    break;
-                }
+        //tant que les 2 peuvent/veulent jouer des bang
+        int compteurTest = 0;
+        while (true) {
+            compteurTest++;
+            if(compteurTest==10){
+                System.out.println(compteurTest);
             }
-        }
+            //La cible choisit si elle veut jouer un Bang! ou non
+            if(!discardBang(target)) {
+                target.decrementHealth(1, player);
+                break;
+            }
+            if(!discardBang(player)) {
+                player.decrementHealth(1, target);
+                break;
+            }
         }
     }
 
