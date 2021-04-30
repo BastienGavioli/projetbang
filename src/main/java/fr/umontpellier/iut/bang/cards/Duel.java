@@ -50,26 +50,10 @@ public class Duel extends OrangeCard {
             //tant que les 2 peuvent/veulent jouer des bang
             while (true) {
                 //La cible choisit si elle veut jouer un Bang! ou non
-                bangCards.removeIf(c -> !c.getName().equals("Bang!"));
-                if(bangCards.size()!=0){
-                    bang = target.chooseCard("Jouez une carte Bang! ou passez",
-                            bangCards, false, true);
-                    if(bang != null)
-                        target.discardFromHand(bang);
-                }
-                else
+                if(!discardBang(bangCards, bang, target))
                     break;
 
-                bangCardsP.removeIf(c -> !c.getName().equals("Bang!"));
-                if(bangCardsP.size() != 0){
-                    //Le joueur choisit s'il veut jouer un Bang! ou non
-                    bangP = player.chooseCard("Jouez une carte Bang! ou passez",
-                            bangCardsP, false, true);
-                    if(bangP != null)
-                        player.discardFromHand(bangP);
-                }
-                else
-                    break;
+                discardBang(bangCardsP, bangP, player);
             }
 
             //a la sortie de la boucle on verifie qui n'a plus de bang / qui a refuser de jouer un bang
@@ -81,4 +65,17 @@ public class Duel extends OrangeCard {
         }
         }
     }
+
+    public boolean discardBang(List<Card> bangCards, Card bang, Player target){
+        bangCards.removeIf(c -> !c.getName().equals("Bang!"));
+        if(bangCards.size()!=0){
+            bang = target.chooseCard("Jouez une carte Bang! ou passez",
+                    bangCards, false, true);
+            if(bang != null)
+                target.discardFromHand(bang);
+            return true;
+        }
+        return false;
+    }
+
 }
