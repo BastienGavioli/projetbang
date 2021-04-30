@@ -1,6 +1,8 @@
 package fr.umontpellier.iut.bang.cards;
 
 import fr.umontpellier.iut.bang.Game;
+import fr.umontpellier.iut.bang.Player;
+import fr.umontpellier.iut.bang.characters.BangCharacter;
 
 public class Barrel extends BlueCard {
 
@@ -8,9 +10,8 @@ public class Barrel extends BlueCard {
         super("Barrel", value, suit);
     }
 
-    public static boolean savePlayer(Game game){
-        Card card = game.drawCard();
-        game.addToDiscard(card);
+    public static boolean savePlayer(Player target){
+        Card card = target.getBangCharacter().randomDraw(target);
         return card.getSuit().toJSON().equals("H");
     }
 
