@@ -48,32 +48,37 @@ public class Duel extends OrangeCard {
                     bangCardsP.removeIf(c -> !c.getName().equals("Bang!"));
 
             //tant que les 2 peuvent/veulent jouer des bang
+            int compteurTest = 0;
             while (true) {
+                compteurTest++;
+                if(compteurTest==10){
+                    System.out.println(compteurTest);
+                }
                 //La cible choisit si elle veut jouer un Bang! ou non
-                if(!discardBang(bangCards, bang, target))
+                if(!discardBang(target)) {
+                    target.decrementHealth(1, player);
                     break;
-
-                discardBang(bangCardsP, bangP, player);
-            }
-
-            //a la sortie de la boucle on verifie qui n'a plus de bang / qui a refuser de jouer un bang
-            if (bang == null) {
-                target.decrementHealth(1, player);
-            } else {
-                player.decrementHealth(1, target);
+                }
+                if(!discardBang(player)) {
+                    player.decrementHealth(1, target);
+                    break;
+                }
             }
         }
         }
     }
 
-    public boolean discardBang(List<Card> bangCards, Card bang, Player target){
+    public boolean discardBang(Player target){
+        Card bang = null;
+        List<Card> bangCards = new ArrayList<>(target.getHand());
         bangCards.removeIf(c -> !c.getName().equals("Bang!"));
         if(bangCards.size()!=0){
             bang = target.chooseCard("Jouez une carte Bang! ou passez",
                     bangCards, false, true);
-            if(bang != null)
+            if(bang != null) {
                 target.discardFromHand(bang);
-            return true;
+                return true;
+            }
         }
         return false;
     }
