@@ -76,7 +76,6 @@ class GameTest {
 
     }
 
-    @Disabled
     @Test
     void testAllOutlawsAreDead(){
         assertFalse(minimalGame.outlawAreAllDead());

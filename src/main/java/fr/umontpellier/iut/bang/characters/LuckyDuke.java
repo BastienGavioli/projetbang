@@ -23,14 +23,16 @@ public class LuckyDuke extends BangCharacter {
 
     @Override
     public Card randomDraw(Player player) {
-        List<Card> pairOfCards = new ArrayList<>();
+        List<String> valueBothCards = new ArrayList<>();
         Card firstCard = player.drawCard();
         Card secondCard = player.drawCard();
-        pairOfCards.add(firstCard);
-        pairOfCards.add(secondCard);
-        Card chosenCard = player.chooseCard("Quelle carte préférez-vous ?", pairOfCards, true, false);
+        valueBothCards.add(firstCard.getPokerString());
+        valueBothCards.add(secondCard.getPokerString());
+        String chosenValue = player.choose("Quelle valeur Poker préférez-vous ?", valueBothCards, true, false);
         player.discard(firstCard);
         player.discard(secondCard);
-        return chosenCard;
+        if(firstCard.getPokerString().equals(chosenValue))
+            return firstCard;
+        return secondCard;
     }
 }

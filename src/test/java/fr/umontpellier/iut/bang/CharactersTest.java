@@ -241,7 +241,6 @@ public class CharactersTest {
         assertEquals(beer, drawPile.peek());
     }
 
-    @Disabled
     @Test
     void testLuckyDuke() {
         makeGameWithCharacter(new LuckyDuke());
@@ -345,7 +344,6 @@ public class CharactersTest {
         assertTrue(p2.getHand().isEmpty());
     }
 
-    @Disabled
     @Test
     void testSuzyLafayette() {
         makeGameWithCharacter(new SuzyLafayette());
