@@ -157,13 +157,25 @@ public class PlayerTest {
     }
 
     @Test
+    void removeFromHand_test() {
+        assertEquals(0, player1.getHand().size());
+        Bang bang = new Bang(1, CardSuit.SPADE);
+        player1.getHand().add(bang);
+        assertEquals(1, player1.getHand().size());
+        player1.removeFromHand(bang);
+        assertEquals(0, player1.getHand().size());
+    }
+
+    @Test
     void removeFromInPlay_test() {
         assertEquals(0, player1.getInPlay().size());
         BlueCard mustang = new Mustang(1, CardSuit.SPADE);
         player1.getInPlay().add(mustang);
         assertEquals(1, player1.getInPlay().size());
+        assertTrue(player1.getInPlay().contains(mustang));
         player1.removeFromInPlay(mustang);
         assertEquals(0, player1.getInPlay().size());
+        assertFalse(player1.getInPlay().contains(mustang));
     }
 
     @Test

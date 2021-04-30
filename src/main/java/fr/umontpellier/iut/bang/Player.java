@@ -387,6 +387,8 @@ public class Player {
      * @return true si la carte a bien été retirée, false sinon (la carte n'était pas dans la main du joueur)
      */
     public boolean removeFromHand(Card card) {
+        if(this.getBangCharacter().getName().equals("Suzy Lafayette") && hand.size()<=1)
+            drawToHand();
         return hand.remove(card);
     }
 
@@ -634,7 +636,7 @@ public class Player {
      * @param card la carte à jouer
      */
     public void playFromHand(Card card) {
-        if (hand.remove(card)) {
+        if (removeFromHand(card)) {
             card.playedBy(this);
         }
     }
