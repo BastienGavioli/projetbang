@@ -25,8 +25,10 @@ public class PedroRamirez extends BangCharacter {
         List<Card> possibilite = new ArrayList<>();
         possibilite.add(player.getGame().getTopOfDiscardPile());
         Card choix = player.chooseCard("Voulez vous prendre la carte de la défausse ?", possibilite, true, true);
-        if (choix != null)
+        if (choix != null){
             player.addToHand(possibilite.get(0));
+            player.getGame().removeFromDiscard(player.getGame().getTopOfDiscardPile());
+        }
         else
             player.drawToHand();
         player.drawToHand();

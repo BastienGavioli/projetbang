@@ -479,4 +479,8 @@ public class Game {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public Deque<Card> getDrawPile() {
+        return drawPile;
+    }
 }

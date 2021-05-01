@@ -29,7 +29,7 @@ public class KitCarlson extends BangCharacter {
         possibilites.add(player.drawCard());
         Card reposer = player.chooseCard("Quelle carte voulez vous reposer ?", possibilites, true, false);
 
-        player.getGame().addToDiscard(reposer);
+        player.getGame().getDrawPile().push(reposer);
         possibilites.remove(reposer);
 
         for(int i = 0; i<=1; i++)
