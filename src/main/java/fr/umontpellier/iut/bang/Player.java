@@ -263,8 +263,7 @@ public class Player {
         }
 
         while(isDead() && hasBeer()) {
-            incrementHealth(1);
-            discardFromHand(getCardInPlay("Beer"));
+            getCardInHand("Beer").playedBy(this);
         }
         if(isDead()) {
             game.removePlayer(this);
@@ -312,12 +311,27 @@ public class Player {
         }
     }
 
+    /*verifie si le joueur a une biere*/
     public boolean hasBeer(){
         for(Card c : hand){
             if(c.getName().equals("Beer"))
                 return true;
         }
         return false;
+    }
+
+    /**
+     * @param cardName nom de la carte à renvoyer
+     * @return la première carte parmi les cartes dans la main du joueur ayant le nom passé en argument, ou {@code null}
+     * si aucune carte ne correspond
+     */
+    public Card getCardInHand(String cardName) {
+        for (Card c : hand) {
+            if (c.getName().equals(cardName)) {
+                return c;
+            }
+        }
+        return null;
     }
 
     /**
