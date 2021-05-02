@@ -18,7 +18,8 @@ public class Indians extends OrangeCard {
         for(Player p : player.getOtherPlayers()){
             //On enlève toutes les cartes qui ne sont pas des bang de la main
             List<Card> bangCards = new ArrayList<>(p.getHand());
-            bangCards.removeIf(c -> !c.getName().equals("Bang!"));
+            bangCards.removeIf(c -> (!c.getName().equals("Bang!") &&
+                    !(p.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Missed!"))));
 
             //Le joueur choisit s'il veut jouer un Bang! ou non
             Card bang = p.chooseCard("Jouez une carte Bang! ou passez",

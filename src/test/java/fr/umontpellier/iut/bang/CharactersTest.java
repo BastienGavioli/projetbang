@@ -99,7 +99,7 @@ public class CharactersTest {
         assertTrue(p1.getHand().contains(volcanic));
     }
 
-    @Disabled
+
     @Test
     void testCalamityJanetJoueMissedCommeUnBang() {
         makeGameWithCharacter(new CalamityJanet());
@@ -113,7 +113,7 @@ public class CharactersTest {
         assertTrue(discardPile.contains(missed));
     }
 
-    @Disabled
+
     @Test
     void testCalamityJanetJoueBangCommeUnMissed() {
         makeGameWithCharacter(new CalamityJanet());

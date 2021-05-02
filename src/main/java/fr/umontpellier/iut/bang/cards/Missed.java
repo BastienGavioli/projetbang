@@ -9,7 +9,17 @@ public class Missed extends OrangeCard {
     }
 
     @Override
+    public void playedBy(Player player) {
+        super.playedBy(player);
+        if(player.getBangCharacter().getName().equals("Calamity Janet")){
+            new Bang(getValue(), getSuit()).playedBy(player);
+        }
+    }
+
+    @Override
     public boolean canPlayFromHand(Player player) {
-        return Bang.isBangEffetActive();
+        return Bang.isBangEffetActive()||
+                (player.getBangCharacter().getName().equals("Calamity Janet")
+                        && new Bang(getValue(), getSuit()).canPlayFromHand(player));
     }
 }

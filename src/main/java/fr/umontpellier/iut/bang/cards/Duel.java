@@ -39,7 +39,8 @@ public class Duel extends OrangeCard {
     public boolean discardBang(Player target){
         Card bang = null;
         List<Card> bangCards = new ArrayList<>(target.getHand());
-        bangCards.removeIf(c -> !c.getName().equals("Bang!"));
+        bangCards.removeIf(c -> (!c.getName().equals("Bang!") &&
+                !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Missed!"))));
         if(bangCards.size()!=0){
             bang = target.chooseCard("Jouez une carte Bang! ou passez",
                     bangCards, false, true);
