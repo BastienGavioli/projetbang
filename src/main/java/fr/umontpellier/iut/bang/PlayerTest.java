@@ -8,6 +8,9 @@ import fr.umontpellier.iut.bang.characters.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
 public class PlayerTest {
     private Game game;
@@ -190,5 +193,15 @@ public class PlayerTest {
         Winchester pioupiou = new Winchester(10, CardSuit.HEART);
         player1.setWeapon(pioupiou);
         assertEquals(pioupiou, player1.getWeapon());
+    }
+
+    @Test
+    void setWeaponWhenAWeaponIsAlreadyEquiped_test(){
+        Winchester pioupiou = new Winchester(10, CardSuit.HEART);
+        RevCarabine carabine = new RevCarabine(1, CardSuit.HEART);
+        player1.setWeapon(pioupiou);
+        player1.setWeapon(carabine);
+        assertEquals(carabine, player1.getWeapon());
+        assertEquals(pioupiou, game.getTopOfDiscardPile());
     }
 }

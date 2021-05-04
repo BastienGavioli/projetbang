@@ -212,6 +212,9 @@ public class Player {
      * @param weapon nouvelle arme à équiper
      */
     public void setWeapon(WeaponCard weapon) {
+        if(this.getWeapon() != null){
+            this.getGame().addToDiscard(this.weapon);
+        }
         this.weapon = weapon;
     }
 
