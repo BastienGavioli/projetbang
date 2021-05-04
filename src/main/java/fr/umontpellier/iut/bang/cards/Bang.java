@@ -12,6 +12,9 @@ public class Bang extends OrangeCard {
      */
     private static boolean bangEffetActive;
 
+    //true quand le bang est déclenché par une gatling
+    private static boolean gatlingEffect = false;
+
     public Bang(int value, CardSuit suit) {
         super("Bang!", value, suit);
         bangEffetActive = false;
@@ -27,7 +30,7 @@ public class Bang extends OrangeCard {
 
         //Si le joueur a une planque, elle s'active
         if((!target.hasBlueCardName("Barrel") || (target.hasBlueCardName("Barrel")
-                && !Barrel.savePlayer(target))) && !(target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)) && !attacker.getBangCharacter().getName().equals("Slab the Killer")) {
+                && !Barrel.savePlayer(target))) && !(target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)) && (!attacker.getBangCharacter().getName().equals("Slab the Killer") || (attacker.getBangCharacter().getName().equals("Slab the Killer") && gatlingEffect))) {
             //On enlève toutes les cartes qui ne sont pas des ratés de la main
             List<Card> missCards = new ArrayList<>(target.getHand());
             missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
@@ -186,5 +189,7 @@ public class Bang extends OrangeCard {
                 && player.getPlayersInRange(player.getRangeMax()).size()>0;
     }
 
-
+    public static void setGatlingEffect(boolean gatlingEffect) {
+        Bang.gatlingEffect = gatlingEffect;
+    }
 }
