@@ -49,8 +49,8 @@ class Main extends React.Component {
         }
 
         let buttons = [];
-        for (const [i, button] of this.state.buttons.entries()) {
-            buttons.push(React.createElement(PlayerButton, { label: button, value: i + 1 }));
+        for (const button of this.state.buttons) {
+            buttons.push(React.createElement(PlayerButton, { label: button, value: button }));
         }
 
         return React.createElement(
@@ -75,7 +75,7 @@ class Main extends React.Component {
                 React.createElement(
                     'div',
                     { id: 'discard_pile' },
-                    React.createElement(CardsList, { cards: this.state.game.discard_pile, keepOrder: true })
+                    React.createElement(CardsList, { cards: this.state.game.discard_pile.reverse(), keepOrder: true })
                 )
             )
         );
