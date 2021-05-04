@@ -258,14 +258,16 @@ public class Player {
     public void decrementHealth(int n, Player attacker) {
         healthPoints-=n;
         //Pouvoir de Bart Cassidy
-        if(this.getBangCharacter().getName().equals("Bart Cassidy")) {
+        if(bangCharacter.getName().equals("Bart Cassidy")) {
             for(int i=n; i>0; i--)
-                this.drawToHand();
+                drawToHand();
         }
-        if(attacker != null && this.getBangCharacter().getName().equals("El Gringo")){
-            this.addToHand(attacker.removeRandomCardFromHand());
+        //Pouvoir de Gringo
+        if(attacker != null && bangCharacter.getName().equals("El Gringo")){
+            addToHand(attacker.removeRandomCardFromHand());
         }
 
+        //utilise autant de bière qu'il faut pour revenir a 1 pv (si il y en a)
         while(isDead() && getCardInHand("Beer") != null) {
             getCardInHand("Beer").playedBy(this);
         }
