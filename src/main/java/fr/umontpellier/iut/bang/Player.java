@@ -159,7 +159,6 @@ public class Player {
      * @return la liste des autres joueurs encore en jeu, dans l'ordre de jeu (le premier est le joueur
      * immédiatement après le joueur courant)
      */
-    
     public List<Player> getOtherPlayers() {
         ArrayList<Player> playerList = new ArrayList<>();
 
@@ -177,6 +176,8 @@ public class Player {
         playerList.remove(this);
         return playerList;
     }
+
+    
 
     /**
      * @param range portée considérée
