@@ -159,11 +159,11 @@ public class Player {
      * @return la liste des autres joueurs encore en jeu, dans l'ordre de jeu (le premier est le joueur
      * immédiatement après le joueur courant)
      */
+    
     public List<Player> getOtherPlayers() {
         ArrayList<Player> playerList = new ArrayList<>();
 
-        Player currentPlayer = game.getCurrentPlayer();
-        int currentPlayerIndex = game.getPlayers().indexOf(game.getCurrentPlayer()) + 1;
+        int currentPlayerIndex = game.getPlayers().indexOf(this) + 1;
         if(currentPlayerIndex == game.getPlayers().size()){
             currentPlayerIndex = 0;
         }
