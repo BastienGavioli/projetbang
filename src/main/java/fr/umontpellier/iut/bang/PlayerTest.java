@@ -6,6 +6,7 @@ import java.util.*;
 import fr.umontpellier.iut.bang.cards.*;
 import fr.umontpellier.iut.bang.characters.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
@@ -145,15 +146,6 @@ public class PlayerTest {
         List<Player> listOtherPlayers = new ArrayList<>(playerList);
         listOtherPlayers.remove(player1);
         assertIterableEquals(listOtherPlayers, player1.getOtherPlayers());
-    }
-
-    @Test
-    void hasBeer_test() {
-        Card beer = new Beer(1, CardSuit.SPADE);
-        player1.getHand().add(beer);
-        assertTrue(player1.hasBeer());
-        player2.getHand().removeIf(card -> card.getName().equals("Beer"));
-        assertFalse(player2.hasBeer());
     }
 
     @Test
