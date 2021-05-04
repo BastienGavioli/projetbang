@@ -15,7 +15,7 @@ public class Dynamite extends BlueCard {
     public void playedBy(Player player) {
         if(!active) {
             player.addToInPlay(this);
-            active=true;
+            active = true;
         }
         else{
             tryToExplodeOn(player);
@@ -32,6 +32,7 @@ public class Dynamite extends BlueCard {
         if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
             player.decrementHealth(3, null);
             player.discardFromInPlay(player.getCardInPlay("Dynamite"));
+            active = false;
         }
         else{
             //On passe la dynamite au suivant
