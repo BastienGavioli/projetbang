@@ -142,6 +142,21 @@ public class PlayerTest {
     }
 
     @Test
+    void getCardInHand_test() {
+        BlueCard mustang1 = new Mustang(1, CardSuit.SPADE);
+        BlueCard mustang2 = new Mustang(1, CardSuit.SPADE);
+        player1.getHand().add(mustang1);
+        assertEquals(mustang1, player1.getCardInHand("Mustang"));
+        player1.getHand().add(mustang2);
+        assertEquals(mustang1, player1.getCardInHand("Mustang"));
+        assertNotEquals(mustang2, player1.getCardInHand("Mustang"));
+        player1.playFromHand(mustang1);
+        assertNotEquals(mustang1, player1.getCardInHand("Mustang"));
+        assertEquals(mustang2, player1.getCardInHand("Mustang"));
+        assertNull(player2.getCardInHand("Mustang"));
+
+    }
+    @Test
     void getOtherPlayers_test() {
         List<Player> listOtherPlayers = new ArrayList<>(playerList);
         listOtherPlayers.remove(player1);
