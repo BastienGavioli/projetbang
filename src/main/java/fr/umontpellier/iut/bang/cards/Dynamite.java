@@ -3,23 +3,17 @@ package fr.umontpellier.iut.bang.cards;
 import fr.umontpellier.iut.bang.Player;
 
 public class Dynamite extends BlueCard {
-    private boolean active;
-
 
     public Dynamite(int value, CardSuit suit) {
         super("Dynamite", value, suit);
-        active = false;
     }
 
     @Override
     public void playedBy(Player player) {
-        if(!active) {
+        if(!player.getInPlay().contains(this))
             player.addToInPlay(this);
-            active = true;
-        }
-        else{
+        else
             tryToExplodeOn(player);
-        }
     }
 
     @Override
@@ -32,7 +26,6 @@ public class Dynamite extends BlueCard {
         if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
             player.decrementHealth(3, null);
             player.discardFromInPlay(player.getCardInPlay("Dynamite"));
-            active = false;
         }
         else{
             //On passe la dynamite au suivant
