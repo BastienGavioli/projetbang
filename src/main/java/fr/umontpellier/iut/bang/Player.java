@@ -266,67 +266,72 @@ public class Player {
         if(attacker != null && bangCharacter.getName().equals("El Gringo")){
             addToHand(attacker.removeRandomCardFromHand());
         }
-
         //utilise autant de bière qu'il faut pour revenir a 1 pv (si il y en a)
         while(isDead() && getCardInHand("Beer") != null) {
             playFromHand(getCardInHand("Beer"));
         }
         if(isDead()) {
-            game.removePlayer(this);
-            //Si le joueur est tué par quelqu'un
-            if (attacker != null) {
-                //Si joueur tué est un Hors-La-Loi, le tueur pioche 3 cartes
-                if (this.getRole() == Role.OUTLAW)
-                    for (int i = 0; i < 3; i++)
-                        attacker.drawToHand();
-                else if (this.getRole() == Role.DEPUTY)
-                    //Si le shériff tue un adjoint, le shériff perd toutes ses cartes de la main et devant lui
-                    if (attacker.getRole() == Role.SHERIFF) {
-                        for (Iterator<BlueCard> it = attacker.inPlay.iterator(); it.hasNext();) {
-                            BlueCard o = it.next();
-                            game.addToDiscard(o);
-                            it.remove(); //Supprime o de c
-                        }
-                        for (Iterator<Card> it = attacker.hand.iterator(); it.hasNext();) {
-                            Card o = it.next();
-                            game.addToDiscard(o);
-                            it.remove();}
+            death(attacker);
+        }
+    }
 
-                            attacker.setWeapon(null);
+    public void death(Player attacker){
+        game.removePlayer(this);
+        //Si le joueur est tué par quelqu'un
+        if (attacker != null) {
+            //Si joueur tué est un Hors-La-Loi, le tueur pioche 3 cartes
+            if (this.getRole() == Role.OUTLAW)
+                for (int i = 0; i < 3; i++)
+                    attacker.drawToHand();
+            else if (this.getRole() == Role.DEPUTY)
+                //Si le shériff tue un adjoint, le shériff perd toutes ses cartes de la main et devant lui
+                if (attacker.getRole() == Role.SHERIFF) {
+                    for (Iterator<BlueCard> it = attacker.inPlay.iterator(); it.hasNext();) {
+                        BlueCard o = it.next();
+                        it.remove(); //Supprime o de c
                     }
-                Player sam = null; //par defaut sam nexiste pas
-                for(Player b : this.getOtherPlayers()){ //on fait le tour des joueurs
-                    if(b.getBangCharacter().getName().equals("Vulture Sam")){
-                         sam = b; //si sam existe il prend la valeur du joueur
-                    }
+                    for (Iterator<Card> it = attacker.hand.iterator(); it.hasNext();) {
+                        Card o = it.next();
+                        it.remove();}
 
-                    //si sam existe il prend les cartes
-                    if(sam != null){
-                        for (BlueCard c : inPlay) {
-                            sam.addToHand(c);
-                        }
-                        for (Card c : hand) {
-                            sam.addToHand(c);
-                        }
-                        if(weapon != null)
-                            sam.addToHand(weapon);
-
-                    }
-                    else{
-                        //dans les autres cas, les cartes sont retirées et mises dans la défausse
-                        for (Iterator<BlueCard> it = inPlay.iterator(); it.hasNext();) {
-                            BlueCard o = it.next();
-                            game.addToDiscard(o);
-                            it.remove(); //Supprime o de c
-                        }
-                        for (Iterator<Card> it = hand.iterator(); it.hasNext();) {
-                            Card o = it.next();
-                            game.addToDiscard(o);
-                            it.remove(); //Supprime o de c
-                        }
-                    }
+                    attacker.setWeapon(null);
                 }
+        }
+        Player sam = null; //par defaut sam nexiste pas
+        for(Player b : this.getOtherPlayers()){ //on fait le tour des joueurs
+            if(b.getBangCharacter().getName().equals("Vulture Sam")){
+                sam = b; //si sam existe il prend la valeur du joueur
             }
+        }
+        //si sam existe il prend les cartes
+        if(sam != null){
+            for (BlueCard c : inPlay) {
+                sam.addToHand(c);
+            }
+            for (Card c : hand) {
+                sam.addToHand(c);
+            }
+            if(weapon!=null)
+                sam.addToHand(weapon);
+        }
+        else{ //on met les cartes dans la défausse sinon
+            for (BlueCard c : inPlay) {
+                game.addToDiscard(c);
+            }
+            for (Card c : hand) {
+                game.addToDiscard(c);
+            }
+            if(weapon!=null)
+                game.addToDiscard(weapon);
+        }
+        //dans tous les cas, les cartes sont retirées de this
+        for (Iterator<BlueCard> it = inPlay.iterator(); it.hasNext();) {
+            BlueCard o = it.next();
+            it.remove(); //Supprime o de c
+        }
+        for (Iterator<Card> it = hand.iterator(); it.hasNext();) {
+            Card o = it.next();
+            it.remove(); //Supprime o de c
         }
     }
 
