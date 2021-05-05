@@ -128,14 +128,7 @@ public class Player {
      * Retourne la portée des joueurs pour les effets ne prenant pas en compte l'arme, modifiée par le viseur
      */
     public int getBaseRange(){
-        int range = 1;
-        if(hasBlueCardName("Scope")){
-            range++;
-        }
-        if(bangCharacter.getName().equals("Rose Doolan")){
-            range++;
-        }
-        return range;
+        return 1;
     }
 
     /**
