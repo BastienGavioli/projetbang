@@ -24,9 +24,9 @@ public class Dynamite extends BlueCard {
     public void tryToExplodeOn(Player player){
         Card pioche = player.randomDraw();
         if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
-            player.decrementHealth(3, null);
             player.discardFromInPlay(player.getCardInPlay("Dynamite"));
-        }
+            player.decrementHealth(3, null);
+            }
         else{
             //On passe la dynamite au suivant
             int index = player.getGame().getPlayers().indexOf(player);
