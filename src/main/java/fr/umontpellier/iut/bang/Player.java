@@ -729,7 +729,7 @@ public class Player {
         while (true) {
             List<Card> possibleCards = new ArrayList<>();
             for (Card c : hand) {
-                if (c.canPlayFromHand(this)) {
+                if (c != null && c.canPlayFromHand(this)) {
                     possibleCards.add(c);
                 }
             }
