@@ -282,9 +282,15 @@ public class Player {
                 else if (this.getRole() == Role.DEPUTY)
                     //Si le shériff tue un adjoint, le shériff perd toutes ses cartes de la main et devant lui
                     if (attacker.getRole() == Role.SHERIFF) {
-                        attacker.hand.removeAll(attacker.getHand());
-                        attacker.inPlay.removeAll(attacker.getInPlay());
-                        attacker.setWeapon(null);
+                        for (Iterator<BlueCard> it = attacker.inPlay.iterator(); it.hasNext();) {
+                            BlueCard o = it.next();
+                            it.remove(); //Supprime o de c
+                        }
+                        for (Iterator<Card> it = attacker.hand.iterator(); it.hasNext();) {
+                            Card o = it.next();
+                            it.remove();}
+
+                            attacker.setWeapon(null);
                     }
                 Player sam = null; //par defaut sam nexiste pas
                 for(Player b : this.getOtherPlayers()){ //on fait le tour des joueurs
