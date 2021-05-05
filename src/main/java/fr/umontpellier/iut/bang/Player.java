@@ -263,7 +263,7 @@ public class Player {
                 drawToHand();
         }
         //Pouvoir de Gringo
-        if(attacker != null && bangCharacter.getName().equals("El Gringo")){
+        if(attacker != null && bangCharacter.getName().equals("El Gringo") && !attacker.getHand().isEmpty()){
             addToHand(attacker.removeRandomCardFromHand());
         }
         //utilise autant de bière qu'il faut pour revenir a 1 pv (si il y en a)
