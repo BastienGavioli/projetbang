@@ -17,7 +17,7 @@ public class CatBalou extends OrangeCard {
 
         ArrayList<String> stringAutorized = panic.othersCardsAndPlayers(player.getOtherPlayers());
 
-        String choix = player.choose("Que voulez vous supprimer ?",
+        String choix = player.choose("Que voulez vous supprimer ? (Nom du joueur = carte random dans la main)",
                 new ArrayList<>(stringAutorized), true, false);
 
         Card choisie = null;
