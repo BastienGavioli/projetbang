@@ -30,13 +30,16 @@ public class Bang extends OrangeCard {
         //compteurMissed compte le nombre d'effet raté du personnage (planque+raté)
         //nbBangNecessaire compte le nombre de raté necessaire pour esquiver (1 sauf si le tireur est Slab auquel cas 2)
         int compteurMissed = 0, nbBangNecessaire=1;
-        if(attacker.getBangCharacter().getName().equals("Slab the Killer")){
+        if(attacker.getBangCharacter().getName().equals("Slab the Killer") && !gatlingEffect){
             nbBangNecessaire=2;
         }
 
-        //Si le joueur a une planque ou si il joue Jourdonnais, elle s'active
-        if((target.hasBlueCardName("Barrel") && Barrel.savePlayer(target)) ||
-                (target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)))
+        //Si le joueur a une planque elle s'active
+        if(target.hasBlueCardName("Barrel") && Barrel.savePlayer(target))
+            compteurMissed++;
+
+        //Si le joueur joue Jourdonnais et que le nombre de missed requis n'est pas atteint, on active sa capcité
+        if((compteurMissed<nbBangNecessaire) && (target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)))
             compteurMissed++;
 
         if(compteurMissed<nbBangNecessaire) //Si la planque n'a pas arreté la balle, on demande les ratés
