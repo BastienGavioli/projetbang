@@ -207,4 +207,13 @@ public class PlayerTest {
         assertEquals(carabine, player1.getWeapon());
         assertEquals(pioupiou, game.getTopOfDiscardPile());
     }
+
+    @Test
+    void setWeaponNullWhenAWeaponIsAlreadyEquiped_test(){
+        Winchester pioupiou = new Winchester(10, CardSuit.HEART);
+        player1.setWeapon(pioupiou);
+        player1.setWeapon(null);
+        assertEquals(null, player1.getWeapon());
+        assertEquals(pioupiou, game.getTopOfDiscardPile());
+    }
 }
