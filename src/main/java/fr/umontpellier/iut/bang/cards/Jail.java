@@ -30,6 +30,11 @@ public class Jail extends BlueCard {
             tryExitJail(player);
     }
 
+    @Override
+    public boolean canPlayFromHand(Player player) {
+        return super.canPlayFromHand(player) && player.getGame().getPlayers().size()>2;
+    }
+
     public void tryExitJail(Player player){
         player.discardFromInPlay(this);
         Card pioche = player.randomDraw();
