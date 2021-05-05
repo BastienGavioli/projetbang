@@ -27,137 +27,52 @@ public class Bang extends OrangeCard {
     public static void bangEffect(Player target, Player attacker){
 
         bangEffetActive = true; //Permet de jouer des ratés
+        //compteurMissed compte le nombre d'effet raté du personnage (planque+raté)
+        //nbBangNecessaire compte le nombre de raté necessaire pour esquiver (1 sauf si le tireur est Slab auquel cas 2)
+        int compteurMissed = 0, nbBangNecessaire=1;
+        if(attacker.getBangCharacter().getName().equals("Slab the Killer")){
+            nbBangNecessaire=2;
+        }
 
-        //Si le joueur a une planque, elle s'active
-        if((!target.hasBlueCardName("Barrel") || (target.hasBlueCardName("Barrel")
-                && !Barrel.savePlayer(target))) && !(target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)) && (!attacker.getBangCharacter().getName().equals("Slab the Killer") || (attacker.getBangCharacter().getName().equals("Slab the Killer") && gatlingEffect))) {
+        //Si le joueur a une planque ou si il joue Jourdonnais, elle s'active
+        if((target.hasBlueCardName("Barrel") && Barrel.savePlayer(target)) ||
+                (target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)))
+            compteurMissed++;
+
+        if(compteurMissed<nbBangNecessaire) //Si la planque n'a pas arreté la balle, on demande les ratés
+        {
             //On enlève toutes les cartes qui ne sont pas des ratés de la main
             List<Card> missCards = new ArrayList<>(target.getHand());
             missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
                     !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
 
             //Le joueur choisit s'il veut jouer un Missed!
-            Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
-                    missCards, false, true);
-            if (missed == null) {
-                target.decrementHealth(1, attacker);
-            } else {
-                target.discardFromHand(missed);
-                target.getGame().addToDiscard(missed);
-            }
-        }
-        else if(attacker.getBangCharacter().getName().equals("Slab the Killer")){
-
-
-            if(target.getBangCharacter().getName().equals("Jourdonnais")){
-
-                //cas ou la cible est Jourdonnais et son activation de planque marche
-                if(Barrel.savePlayer(target)){
-
-                    //verification qu'il n'a pas une planque supplementaire lui permettant d'atteindre les Missed! requis
-                    if(!target.hasBlueCardName("Barrel") || (target.hasBlueCardName("Barrel") && !Barrel.savePlayer(target))){
-                        List<Card> missCards = new ArrayList<>(target.getHand());
-                        missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
-                                !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
-                        Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
-                                missCards, false, true);
-                        if (missed == null) {
-                            target.decrementHealth(1, attacker);
-                        } else {
-                            target.discardFromHand(missed);
-                            target.getGame().addToDiscard(missed);
-                        }
+            if(missCards.size()>=nbBangNecessaire-compteurMissed) {
+                Card missed=missCards.get(0);//Carte de base qui sera changé
+                while (compteurMissed<nbBangNecessaire && missed!=null) {
+                    missed=null;
+                    missed = target.chooseCard("Jouez une carte Missed! ou passez",
+                            missCards, false, true);
+                    if(missed!=null) {
+                        compteurMissed++;
+                        target.discardFromHand(missed);
+                        target.getGame().addToDiscard(missed);
+                        missCards.remove(missed);
                     }
                 }
-
-                //cas ou la cible est Jourdonnais mais que son activation de planque ne marche pas
-                else{
-
-                    //cas ou il a une planque et que celle-ci marche
-                    if(target.hasBlueCardName("Barrel") && Barrel.savePlayer(target)){
-                        List<Card> missCards = new ArrayList<>(target.getHand());
-                        missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
-                                !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
-                        Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
-                                missCards, false, true);
-                        if (missed == null) {
-                            target.decrementHealth(1, attacker);
-                        } else {
-                            target.discardFromHand(missed);
-                            target.getGame().addToDiscard(missed);
-                        }
-                    }
-
-                    //cas ou il faut jouer les 2 Missed!
-                    else{
-                        List<Card> missCards = new ArrayList<>(target.getHand());
-                        missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
-                                !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
-                        if(missCards.size() < 2){
-                            target.decrementHealth(1,attacker);
-                        }
-                        else{
-                            Card missed1 = target.chooseCard("Jouez deux carte Missed! ou passez",
-                                    missCards, false, true);
-                            if (missed1 == null) {
-                                target.decrementHealth(1, attacker);
-                            } else {
-                                target.discardFromHand(missed1);
-                                target.getGame().addToDiscard(missed1);
-                                missCards.remove(missed1);
-                                Card missed2 = target.chooseCard("Jouez la deuxieme carte Missed!",
-                                        missCards,false,false);
-                                target.discardFromHand(missed2);
-                                target.getGame().addToDiscard(missed2);
-                            }
-                        }
-                    }
-                }
-            }
-
-            //cas ou la cible n'est pas Jourdonnais mais dispose d'une planque et que celle-ci marche
-            else if(target.hasBlueCardName("Barrel") && Barrel.savePlayer(target)){
-                List<Card> missCards = new ArrayList<>(target.getHand());
-                missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
-                        !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
-                Card missed = target.chooseCard("Jouez une carte Missed! ou passez",
-                        missCards, false, true);
-                if (missed == null) {
+                //Si il n'y a pas eu suffisement de raté le joueur perd un pv
+                if (compteurMissed<nbBangNecessaire) {
                     target.decrementHealth(1, attacker);
                 } else {
                     target.discardFromHand(missed);
                     target.getGame().addToDiscard(missed);
                 }
-            }
-
-            //cas ou aucune planque ne marche et il faut jouer 2 Missed!
-            else{
-                List<Card> missCards = new ArrayList<>(target.getHand());
-                missCards.removeIf(c -> (!c.getName().equals("Missed!") &&
-                        !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
-                if(missCards.size() < 2){
-                    target.decrementHealth(1,attacker);
-                }
-                else{
-                    Card missed1 = target.chooseCard("Jouez deux carte Missed! ou passez",
-                            missCards, false, true);
-                    if (missed1 == null) {
-                        target.decrementHealth(1, attacker);
-                    } else {
-                        target.discardFromHand(missed1);
-                        target.getGame().addToDiscard(missed1);
-                        missCards.remove(missed1);
-                        Card missed2 = target.chooseCard("Jouez la deuxieme carte Missed!",
-                                missCards,false,false);
-                        target.discardFromHand(missed2);
-                        target.getGame().addToDiscard(missed2);
-
-                    }
-                }
-            }
+            }else //Si le joueur n'a pas sufisement de raté, il perd un pv
+                target.decrementHealth(1, attacker);
         }
         bangEffetActive = false;
     }
+
 
 
     @Override

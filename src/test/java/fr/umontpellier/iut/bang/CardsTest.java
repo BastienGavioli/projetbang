@@ -239,7 +239,7 @@ public class CardsTest {
         assertEquals(4, p5.getHealthPoints());  // rmq: le Shériff a 5 PV max
     }
 
-    @Disabled
+
     @Test
     void testGeneralStore() {
         simpleGame.setInput("Bang!", "Bang!", "Missed!");

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 public class PlayerTest {
@@ -143,6 +142,10 @@ public class PlayerTest {
         player1.getInPlay().add(mustang);
         assertEquals(3, player4.distanceTo(player1));
     }
+
+    /**
+     * Tests unitaires d'autres fonctions de la classe Player
+     */
 
     @Test
     void getCardInHand_test() {

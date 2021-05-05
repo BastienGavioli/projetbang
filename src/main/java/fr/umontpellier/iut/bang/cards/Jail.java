@@ -5,18 +5,16 @@ import fr.umontpellier.iut.bang.Player;
 import java.util.ArrayList;
 
 public class Jail extends BlueCard {
-    private boolean active;
     public Jail(int value, CardSuit suit) {
         super("Jail", value, suit);
-        active = false;
     }
 
     @Override
     public void playedBy(Player player) {
-        if(!active){
+        if(!player.getInPlay().contains(this)){
             Player target;
             ArrayList<Player> targets = new ArrayList<>();
-            //retire le sheriff des possibilites
+            //retire le shériff des possibilités
             for(Player p : player.getOtherPlayers()){
                 if(!p.getRole().toString().equals("SHERIFF")){
                     targets.add(p);
@@ -27,7 +25,6 @@ public class Jail extends BlueCard {
                     targets, false);
             //Ajout de la carte au joueur choisi
             target.addToInPlay(this);
-            active = true;
         }
         else
             tryExitJail(player);
