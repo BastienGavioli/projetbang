@@ -269,7 +269,7 @@ public class Player {
 
         //utilise autant de bière qu'il faut pour revenir a 1 pv (si il y en a)
         while(isDead() && getCardInHand("Beer") != null) {
-            getCardInHand("Beer").playedBy(this);
+            playFromHand(getCardInHand("Beer"));
         }
         if(isDead()) {
             game.removePlayer(this);
