@@ -22,15 +22,18 @@ public class PedroRamirez extends BangCharacter {
 
     @Override
     public void onStartTurn(Player player) {
-        List<Card> possibilite = new ArrayList<>();
-        possibilite.add(player.getGame().getTopOfDiscardPile());
-        Card choix = player.chooseCard("Voulez vous prendre la carte de la défausse ?", possibilite, true, true);
-        if (choix != null){
-            player.addToHand(possibilite.get(0));
-            player.getGame().removeFromDiscard(player.getGame().getTopOfDiscardPile());
-        }
-        else
+        if(player.getGame().getTopOfDiscardPile() == null)
             player.drawToHand();
+        else {
+            List<Card> possibilite = new ArrayList<>();
+            possibilite.add(player.getGame().getTopOfDiscardPile());
+            Card choix = player.chooseCard("Voulez vous prendre la carte de la défausse ?", possibilite, true, true);
+            if (choix != null) {
+                player.addToHand(possibilite.get(0));
+                player.getGame().removeFromDiscard(player.getGame().getTopOfDiscardPile());
+            } else
+                player.drawToHand();
+        }
         player.drawToHand();
     }
 }
