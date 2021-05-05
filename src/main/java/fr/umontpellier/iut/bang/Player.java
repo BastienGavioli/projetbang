@@ -284,10 +284,12 @@ public class Player {
                     if (attacker.getRole() == Role.SHERIFF) {
                         for (Iterator<BlueCard> it = attacker.inPlay.iterator(); it.hasNext();) {
                             BlueCard o = it.next();
+                            game.addToDiscard(o);
                             it.remove(); //Supprime o de c
                         }
                         for (Iterator<Card> it = attacker.hand.iterator(); it.hasNext();) {
                             Card o = it.next();
+                            game.addToDiscard(o);
                             it.remove();}
 
                             attacker.setWeapon(null);
@@ -306,17 +308,22 @@ public class Player {
                         for (Card c : hand) {
                             sam.addToHand(c);
                         }
-                        sam.addToHand(weapon);
-                    }
+                        if(weapon != null)
+                            sam.addToHand(weapon);
 
-                    //dans les autres cas, les cartes sont retirées et mises dans la défausse
-                    for (Iterator<BlueCard> it = inPlay.iterator(); it.hasNext();) {
-                        BlueCard o = it.next();
-                        it.remove(); //Supprime o de c
                     }
-                    for (Iterator<Card> it = hand.iterator(); it.hasNext();) {
-                        Card o = it.next();
-                        it.remove(); //Supprime o de c
+                    else{
+                        //dans les autres cas, les cartes sont retirées et mises dans la défausse
+                        for (Iterator<BlueCard> it = inPlay.iterator(); it.hasNext();) {
+                            BlueCard o = it.next();
+                            game.addToDiscard(o);
+                            it.remove(); //Supprime o de c
+                        }
+                        for (Iterator<Card> it = hand.iterator(); it.hasNext();) {
+                            Card o = it.next();
+                            game.addToDiscard(o);
+                            it.remove(); //Supprime o de c
+                        }
                     }
                 }
             }
