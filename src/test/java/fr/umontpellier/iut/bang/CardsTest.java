@@ -477,4 +477,15 @@ public class CardsTest {
         p1.playFromHand(winchester);
         assertEquals(5, p1.getWeaponRange());
     }
+
+    @Test
+    void testBangNeDiscardPasSiPasDeBarrel() {
+        simpleGame.setInput("p2");
+        Card bang = new Bang(1, CardSuit.HEART);
+
+        p1.getHand().add(bang);
+        p1.playFromHand(bang);
+        assertEquals(3, p2.getHealthPoints());
+        assertEquals(1,discardPile.size());
+    }
 }
