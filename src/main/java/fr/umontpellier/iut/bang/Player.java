@@ -123,20 +123,7 @@ public class Player {
         }
         return weapon.getRange();
     }
-
-    /**
-     * Retourne la portée des joueurs pour les effets ne prenant pas en compte l'arme, modifiée par le viseur
-     */
-    public int getBaseRange(){
-        return 1;
-    }
-
-    /**
-     * @return la range d'un personnage avec son arme plus ses modificateurs
-     */
-    public int getRangeMax(){
-        return getWeaponRange()+getBaseRange()-1;
-    }
+    
     /**
      * @return le nombre maximum de points de vie que le joueur peut avoir. Dépend des points de vie de son personnage
      * et de son rôle (le Shériff a un point de vie max de plus que les autres)

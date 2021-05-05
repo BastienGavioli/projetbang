@@ -21,7 +21,7 @@ public class CatBalou extends OrangeCard {
                 new ArrayList<>(stringAutorized), true, false);
 
         Card choisie = null;
-        for(Card c : panic.cardsOwnedByPlayers(player.getPlayersInRange(player.getBaseRange()))) {
+        for(Card c : panic.cardsOwnedByPlayers(player.getPlayersInRange(1))) {
             if(choix.equals("" + c.getName() + c.getCardColor())){
                 choisie = c;
                 break;

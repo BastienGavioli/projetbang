@@ -85,7 +85,7 @@ public class Bang extends OrangeCard {
         super.playedBy(player);
         //On sait qu'il y a au moins 1 joueur à portée
         Player target;
-        int range = player.getRangeMax();
+        int range = player.getWeaponRange();
         //Sélection automatique de la cible si elle est unique
         if(player.getPlayersInRange(range).size()==1){
             target = player.getPlayersInRange(range).get(0);
@@ -106,7 +106,7 @@ public class Bang extends OrangeCard {
         return ((player.getWeapon()!=null &&
                 player.getWeapon().getName().equals("Volcanic"))
                 ||!player.isBangPlayed() || player.getBangCharacter().getName().equals("Willy the Kid"))
-                && player.getPlayersInRange(player.getRangeMax()).size()>0;
+                && player.getPlayersInRange(player.getWeaponRange()).size()>0;
     }
 
     public static void setGatlingEffect(boolean gatlingEffect) {

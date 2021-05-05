@@ -14,7 +14,7 @@ public class Panic extends OrangeCard {
     @Override
     public void playedBy(Player player) {
         super.playedBy(player);
-        ArrayList<String> stringAutorized = othersCardsAndPlayers(player.getPlayersInRange(player.getBaseRange()));
+        ArrayList<String> stringAutorized = othersCardsAndPlayers(player.getPlayersInRange(1));
 
         String choix = player.choose("Que voulez vous selectioner ? (Cliquer sur le joueur pour prendre dans la main)",
                 new ArrayList<>(stringAutorized), true, false);
@@ -22,7 +22,7 @@ public class Panic extends OrangeCard {
         Card choisie=null;
         //Si la carte viens de la main, on connaitra son nom, sinon on connaitra son nom et sa valeur pocker
 
-        for(Card c : cardsOwnedByPlayers(player.getPlayersInRange(player.getBaseRange()))) {
+        for(Card c : cardsOwnedByPlayers(player.getPlayersInRange(1))) {
             if(choix.equals("" + c.getName() + c.getCardColor())){
                 choisie = c;
                 break;
