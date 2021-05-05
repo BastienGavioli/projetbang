@@ -54,7 +54,9 @@ public class Bang extends OrangeCard {
                 Card missed=missCards.get(0);//Carte de base qui sera changé
                 while (compteurMissed<nbBangNecessaire && missed!=null) {
                     missed=null;
-                    missed = target.chooseCard("Jouez une carte Missed! ou passez",
+                    int nbMissed = nbBangNecessaire-compteurMissed;
+                    String instructions = "Il reste " + nbMissed  + " carte(s) Missed! à jouer";
+                    missed = target.chooseCard(instructions,
                             missCards, false, true);
                     if(missed!=null) {
                         compteurMissed++;
