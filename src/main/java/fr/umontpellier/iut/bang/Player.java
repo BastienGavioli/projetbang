@@ -404,9 +404,10 @@ public class Player {
      * @return true si la carte a bien été retirée, false sinon (la carte n'était pas dans la main du joueur)
      */
     public boolean removeFromHand(Card card) {
-        if(this.getBangCharacter().getName().equals("Suzy Lafayette") && hand.size()<=1)
+        boolean canBeRemoved = hand.remove(card);
+        if(this.getBangCharacter().getName().equals("Suzy Lafayette") && hand.size()==0)
             drawToHand();
-        return hand.remove(card);
+        return canBeRemoved;
     }
 
     /**
