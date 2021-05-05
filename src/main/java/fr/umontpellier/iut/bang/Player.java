@@ -284,8 +284,7 @@ public class Player {
                     if (attacker.getRole() == Role.SHERIFF) {
                         attacker.hand.removeAll(attacker.getHand());
                         attacker.inPlay.removeAll(attacker.getInPlay());
-                        if(attacker.getWeapon()!=null)
-                            attacker.discard(attacker.weapon);
+                        attacker.setWeapon(null);
                     }
                 Player sam = null; //par defaut sam nexiste pas
                 for(Player b : this.getOtherPlayers()){ //on fait le tour des joueurs
@@ -301,6 +300,7 @@ public class Player {
                         for (Card c : hand) {
                             sam.addToHand(c);
                         }
+                        sam.addToHand(weapon);
                     }
 
                     //dans les autres cas, les cartes sont retirées et mises dans la défausse
