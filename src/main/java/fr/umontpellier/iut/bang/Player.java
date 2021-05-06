@@ -237,11 +237,6 @@ public class Player {
      */
     public void decrementHealth(int n, Player attacker) {
         healthPoints-=n;
-        //Pouvoir de Bart Cassidy
-        if(bangCharacter.getName().equals("Bart Cassidy")) {
-            for(int i=n; i>0; i--)
-                drawToHand();
-        }
         //Pouvoir de Gringo
         if(attacker != null && bangCharacter.getName().equals("El Gringo") && !attacker.getHand().isEmpty()){
             addToHand(attacker.removeRandomCardFromHand());
@@ -252,6 +247,13 @@ public class Player {
         }
         if(isDead()) {
             death(attacker);
+        }
+        else{
+            //Pouvoir de Bart Cassidy
+            if(bangCharacter.getName().equals("Bart Cassidy")) {
+                for(int i=n; i>0; i--)
+                    drawToHand();
+            }
         }
     }
 

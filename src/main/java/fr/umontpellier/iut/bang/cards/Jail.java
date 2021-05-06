@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.bang.cards;
 
 import fr.umontpellier.iut.bang.Player;
+import fr.umontpellier.iut.bang.Role;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class Jail extends BlueCard {
 
     @Override
     public boolean canPlayFromHand(Player player) {
-        return super.canPlayFromHand(player) && player.getGame().getPlayers().size()>2;
+        return super.canPlayFromHand(player) && (player.getGame().getPlayers().size()>2 && !player.getRole().equals(Role.SHERIFF));
     }
 
     public void tryExitJail(Player player){
