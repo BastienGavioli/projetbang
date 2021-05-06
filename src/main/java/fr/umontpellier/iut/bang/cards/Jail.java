@@ -33,7 +33,7 @@ public class Jail extends BlueCard {
 
     @Override
     public boolean canPlayFromHand(Player player) {
-        return super.canPlayFromHand(player) && (player.getGame().getPlayers().size()>2 && !player.getRole().equals(Role.SHERIFF));
+        return super.canPlayFromHand(player) && (player.getGame().getPlayers().size()>2 || player.getRole().equals(Role.SHERIFF));
     }
 
     public void tryExitJail(Player player){
