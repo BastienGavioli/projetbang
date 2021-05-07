@@ -400,4 +400,27 @@ public class CharactersTest {
         assertTrue(discardPile.contains(bang2));
         assertTrue(discardPile.contains(bang3));
     }
+
+
+    @Test
+    void testJourdanaisPossedeUnePlanque(){
+        makeGameWithCharacter(new Jourdonnais());
+        game.setInput("p1");
+        BlueCard barrel = new Barrel(1, CardSuit.HEART);
+        Card bang = new Bang(1, CardSuit.HEART);
+        Card bang2 = new Bang(2, CardSuit.HEART);
+        Card jail = new Jail(1, CardSuit.SPADE);
+        barrel.playedBy(p1);
+        game.getDrawPile().push(bang);
+        game.getDrawPile().push(jail);
+
+        p2.addToHand(bang2);
+        p2.playFromHand(bang2);
+
+        assertEquals(4, p1.getHealthPoints());
+        assertEquals(80, game.getDrawPile().size());
+        assertEquals( game.getTopOfDiscardPile(), bang);
+        game.removeFromDiscard(bang);
+        assertEquals(game.getTopOfDiscardPile(), jail);
+    }
 }

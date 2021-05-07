@@ -488,4 +488,22 @@ public class CardsTest {
         assertEquals(3, p2.getHealthPoints());
         assertEquals(1,discardPile.size());
     }
+
+    @Test
+    void testPanicPorteArmeAFeu(){
+        simpleGame.setInput("p3", "p2", "");
+
+        Card panic = new Panic(1, CardSuit.HEART);
+        Card barrel = new Barrel(1, CardSuit.SPADE);
+        Card barrel2 = new Barrel(2, CardSuit.SPADE);
+
+        p1.getHand().add(panic);
+        p2.getHand().add(barrel2);
+        p3.getHand().add(barrel);
+        p1.playFromHand(panic);
+
+        assertTrue(p3.getHand().contains(barrel));
+        assertTrue(p2.getHand().isEmpty());
+        assertTrue(p1.getHand().contains(barrel2));
+    }
 }
