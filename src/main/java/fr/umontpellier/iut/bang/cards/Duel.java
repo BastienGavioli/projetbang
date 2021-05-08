@@ -30,14 +30,14 @@ public class Duel extends OrangeCard {
                 break;
             }
             if(!discardBang(player)) {
-                player.decrementHealth(1, target);
+                player.decrementHealth(1, player);
                 break;
             }
         }
     }
 
     public boolean discardBang(Player target){
-        Card bang = null;
+        Card bang;
         List<Card> bangCards = new ArrayList<>(target.getHand());
         bangCards.removeIf(c -> (!c.getName().equals("Bang!") &&
                 !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Missed!"))));
