@@ -688,9 +688,9 @@ public class Player {
      * </ul>
      */
     public void playTurn() {
-        // phase 0: setup et résolution des effets préliminaires (dynamite, prison, etc...)
-        // dynamite : tire une carte qui sera ensuite défausser si entre 2 et 9 de pique la dynamite explose
-        //et fait 3 dégâts sinon passe au joueur à sa gauche
+        // Phase 0: setup et résolution des effets préliminaires (dynamite, prison, etc...)
+        // Dynamite : tire une carte qui sera ensuite défaussée. Si entre 2 et 9 de pique, la dynamite explose
+        //et fait 3 dégâts, sinon passe au joueur à sa gauche
         BlueCard dynamite = this.getCardInPlay("Dynamite");
         BlueCard jail = this.getCardInPlay("Jail");
         while (dynamite != null){
@@ -698,38 +698,39 @@ public class Player {
             dynamite = this.getCardInPlay("Dynamite");
         }
 
-        //tire une carte si coeur la carte est défaussée il joue normalement, sinon le joueur la défausse et passe son tour
-        //ne peut pas être utilisé contre le shériff
+        //Tire une carte. Si c'est coeur, carte défaussée et il joue normalement, sinon le joueur la défausse et passe son tour
         if(jail != null){
             jail.playedBy(this);
             return;
         }
 
-        // phase 1: piocher des cartes
-        bangCharacter.onStartTurn(this);
+        if(!isDead()){
+            // phase 1: piocher des cartes
+            bangCharacter.onStartTurn(this);
 
-        // phase 2: jouer des cartes
-        while (true) {
-            List<Card> possibleCards = new ArrayList<>();
-            for (Card c : hand) {
-                if (c != null && c.canPlayFromHand(this)) {
-                    possibleCards.add(c);
+            // phase 2: jouer des cartes
+            while (true) {
+                List<Card> possibleCards = new ArrayList<>();
+                for (Card c : hand) {
+                    if (c != null && c.canPlayFromHand(this)) {
+                        possibleCards.add(c);
+                    }
+                }
+                Card card = chooseCard("Choisissez une carte à jouer", possibleCards, false, true);
+                if (card == null) break;
+                playFromHand(card);
+            }
+
+            // phase 3: défausser les cartes en trop
+            while (hand.size() > healthPoints && !isDead()) {
+                Card card = chooseCard(String.format("Défaussez pour n'avoir que %d carte(s) en main", healthPoints), hand, false, false);
+                if (card != null) {
+                    discardFromHand(card);
                 }
             }
-            Card card = chooseCard("Choisissez une carte à jouer", possibleCards, false, true);
-            if (card == null) break;
-            playFromHand(card);
+            //On remet la possibilité de jouer des bang pour les duels et le tour d'après
+            bangPlayed = false;
         }
-
-        // phase 3: défausser les cartes en trop
-        while (hand.size() > healthPoints && !isDead()) {
-            Card card = chooseCard(String.format("Défaussez pour n'avoir que %d carte(s) en main", healthPoints), hand, false, false);
-            if (card != null) {
-                discardFromHand(card);
-            }
-        }
-        //On remet la possibilité de jouer des bang pour les duels et le tour d'après
-        bangPlayed = false;
     }
 
 

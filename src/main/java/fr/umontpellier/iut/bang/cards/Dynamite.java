@@ -26,7 +26,7 @@ public class Dynamite extends BlueCard {
         if(pioche.getValue() >= 2 && pioche.getValue() <=9 && pioche.getSuit().toJSON().equals("S")){
             player.discardFromInPlay(player.getCardInPlay("Dynamite"));
             player.decrementHealth(3, null);
-            }
+        }
         else{
             //On passe la dynamite au suivant
             int index = player.getGame().getPlayers().indexOf(player);
