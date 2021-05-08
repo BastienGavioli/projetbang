@@ -50,7 +50,7 @@ public class Bang extends OrangeCard {
                     !(target.getBangCharacter().getName().equals("Calamity Janet") && c.getName().equals("Bang!"))));
 
             //Le joueur choisit s'il veut jouer un Missed!
-            if(missCards.size()>=nbBangNecessaire-compteurMissed) {
+            if(missCards.size()>=nbBangNecessaire-compteurMissed || (nbBangNecessaire==2 && !missCards.isEmpty())) {
                 Card missed=missCards.get(0);//Carte de base qui sera changé
                 while (compteurMissed<nbBangNecessaire && missed!=null) {
                     missed=null;
