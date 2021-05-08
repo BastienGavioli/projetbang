@@ -13,5 +13,7 @@ public class Beer extends OrangeCard {
         super.playedBy(player);
         if(player.getGame().getPlayers().size()>2)
             player.incrementHealth(1);
+        else
+            player.incrementHealth(0);
     }
 }
