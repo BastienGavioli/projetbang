@@ -17,7 +17,7 @@ public class Jail extends BlueCard {
             ArrayList<Player> targets = new ArrayList<>();
             //retire le shériff des possibilités
             for(Player p : player.getOtherPlayers()){
-                if(!p.getRole().toString().equals("SHERIFF")){
+                if(!p.getRole().toString().equals("SHERIFF") && !p.hasBlueCardName("Jail")){
                     targets.add(p);
                 }
             }
