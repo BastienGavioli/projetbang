@@ -28,7 +28,7 @@ public class Bang extends OrangeCard {
 
         bangEffetActive = true; //Permet de jouer des ratés
         //compteurMissed compte le nombre d'effet raté du personnage (planque+raté)
-        //nbBangNecessaire compte le nombre de raté necessaire pour esquiver (1 sauf si le tireur est Slab auquel cas 2)
+        //nbBangNecessaire compte le nombre de raté nécessaire pour esquiver (1 sauf si le tireur est Slab auquel cas 2)
         int compteurMissed = 0, nbBangNecessaire=1;
         if(attacker.getBangCharacter().getName().equals("Slab the Killer") && !gatlingEffect){
             nbBangNecessaire=2;
@@ -38,7 +38,7 @@ public class Bang extends OrangeCard {
         if(target.hasBlueCardName("Barrel") && Barrel.savePlayer(target))
             compteurMissed++;
 
-        //Si le joueur joue Jourdonnais et que le nombre de missed requis n'est pas atteint, on active sa capcité
+        //Si le joueur joue Jourdonnais et que le nombre de missed requis n'est pas atteint, on active sa capacité
         if((compteurMissed<nbBangNecessaire) && (target.getBangCharacter().getName().equals("Jourdonnais") && Barrel.savePlayer(target)))
             compteurMissed++;
 
@@ -106,7 +106,7 @@ public class Bang extends OrangeCard {
         return ((player.getWeapon()!=null &&
                 player.getWeapon().getName().equals("Volcanic"))
                 ||!player.isBangPlayed() || player.getBangCharacter().getName().equals("Willy the Kid"))
-                && player.getPlayersInRange(player.getWeaponRange()).size()>0;
+                && !player.getPlayersInRange(player.getWeaponRange()).isEmpty();
     }
 
     public static void setGatlingEffect(boolean gatlingEffect) {
